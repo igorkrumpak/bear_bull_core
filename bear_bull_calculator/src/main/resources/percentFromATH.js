@@ -1,0 +1,1 @@
+return MathUtils.round2DecimalPlaces(((o.getDouble('Price') / o.maxPrice() * 100)) - 100);

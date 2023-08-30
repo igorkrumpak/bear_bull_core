@@ -1,0 +1,119 @@
+Current Price
+if price > 1, format 2 decimal
+if price <= 1 && price > 0.01, format 3 decimal places
+if price <= 0.01 && price > 0.001, format 4 decimal places  
+...
+
+Total Volumne
+Cut decimal places
+
+Total Market Cap
+Cut decimal places
+
+
+
+
+
+
+
+fillPriceHistory
+- called with 90 days parameter
+- we get 24 prices for each day
+- first price is saved as daily price
+- all other prices should be saved as hourly prices
+
+
+
+
+executeGetMissingDailyPrices
+- searches for missing daily prices
+- creates intervals based on missing daily prices
+- searches and creates daily price(if more prices for same day are returned, first one is daily price)
+
+
+
+executeGetMissingHourlyPrices
+- ????
+- if we call fillPriceHistory then our interval must be 30 days or more to get daily prices in response
+- solutions
+- get all hourly prices and group them into has
+- done
+
+
+- get daily price
+- get hourly price
+- fill missing daily and hourly prices
+- fill missing hourly prices
+- create missing daily report
+- create dashboard report
+- fill reports
+
+
+
+create daily reports
+- adds hourly prices
+
+
+
+how to add hourly prices to existing reports?
+- migracija?
+- new job?
+- update of missing metadatas
+
+
+
+create daily report
+- getYesterday, ok
+- getLatestDailyPrice, 
+
+
+
+
+
+create weekly reports
+
+date until (latest price or yesterday)
+
+get all prices
+
+prices by Date
+HashMap<Date, List<Date>>
+
+get current report dates (daily, weekly)
+
+getMissingDates expend with week
+
+
+
+
+vsak dan se ustvari dnevni report
+- vsak report je lahko tipa dnevni ali pa dashboard
+- časovni okviri reporta so lahko dnevni, tedens ali mesečni
+
+
+- report je lahko dnevna, tedenska ali mesečna
+
+
+
+vrni mi report, kjer je časovni okvir dnevni
+vrni mi report, kjer je časovni okvir tedenski
+vrni mi report, kjer je časovni okvir mesečni
+
+% from ATH get max price in current price
+% from yesterday
+% from Last Week
+% from  Month
+
+
+
+
+iitech_core  (no quarkus)
+    -util
+    -test
+    -calculator
+
+bear_bull
+    -bear_bull
+    -bear_bull_test
+    -bear_bull_calculator
+    -coingecko
