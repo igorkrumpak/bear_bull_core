@@ -38,12 +38,12 @@ public class Init {
 		if (ProfileManager.getActiveProfile().contains("dev")) {
 			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
 			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.DAILY);
-			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
-			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
+//			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
+//			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
 			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
 			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.DAILY);
-			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
-			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
+//			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
+//			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
 		}
 		task.executeCreateDashboard();
 		
