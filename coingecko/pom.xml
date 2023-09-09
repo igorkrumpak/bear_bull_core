@@ -5,20 +5,36 @@
 	<parent>
 		<groupId>si.iitech</groupId>
 		<artifactId>bear_bull_core</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 	<artifactId>coingecko</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>si.iitech</groupId>
 			<artifactId>util</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${si.iitech.core}</version>
 		</dependency>
 		<dependency>
 			<groupId>si.iitech</groupId>
 			<artifactId>bear_bull_test</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${si.iitech.bear_bull_core}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${org.projectlombok.lombok}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>retrofit</artifactId>
+			<version>${com.squareup.retrofit2.retrofit}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>converter-jackson</artifactId>
+			<version>${com.squareup.retrofit2.converter-jackson}</version>
 		</dependency>
 	</dependencies>
 </project>

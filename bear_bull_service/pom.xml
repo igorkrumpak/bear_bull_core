@@ -5,35 +5,51 @@
 	<parent>
 		<groupId>si.iitech</groupId>
 		<artifactId>bear_bull_core</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 	<artifactId>bear_bull_service</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>si.iitech</groupId>
 			<artifactId>util</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${si.iitech.core}</version>
 		</dependency>
 		<dependency>
 			<groupId>si.iitech</groupId>
 			<artifactId>bear_bull_entities</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${si.iitech.bear_bull_core}</version>
 		</dependency>
 		<dependency>
 			<groupId>si.iitech</groupId>
 			<artifactId>bear_bull_calculator</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${si.iitech.bear_bull_core}</version>
 		</dependency>
 		<dependency>
 			<groupId>si.iitech</groupId>
 			<artifactId>coingecko</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${si.iitech.bear_bull_core}</version>
 		</dependency>
 		<dependency>
 			<groupId>si.iitech</groupId>
 			<artifactId>bear_bull_test</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${si.iitech.bear_bull_core}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-arc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-vertx</artifactId>
 		</dependency>
 	</dependencies>
 </project>
