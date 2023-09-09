@@ -72,6 +72,7 @@ public class BearBullTest extends AbstractTest {
 		EtReport.getDailyReportsWithMissingMetadatas(EtCoin.findByCoinId("bitcoin").id, metadataCalculators.size());
 	}
 
+	@Disabled
 	@Test
 	public void getDailyReportsWithErrorMetadatas() {
 		EtReport.getReportsWithErrorMetadatas(EtCoin.findByCoinId("avalanche-2").id, ReportType.DAILY);
@@ -101,10 +102,17 @@ public class BearBullTest extends AbstractTest {
 		task.executeUpdateAllReportsInputMetadatas();
 	}
 
-	@Disabled
 	@Test
 	public void updateAllReportsMetadatas() {
-		reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
+		for (EtCoin coin : EtCoin.listCoinsWithReports()) {
+			reportService.updateAllReportsMetadatas(coin, ReportType.DAILY);
+		}
+	}
+	
+	@Disabled
+	@Test
+	public void createReports() {
+		reportService.createReports(EtCoin.findByCoinId("mantle"), ReportType.DAILY);
 	}
 
 	@Disabled
@@ -206,7 +214,7 @@ public class BearBullTest extends AbstractTest {
 			}
 		}
 	}
-
+	
 	@Disabled
 	@Test
 	public void testBitcoinsMetadata() {

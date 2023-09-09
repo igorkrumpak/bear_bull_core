@@ -32,6 +32,7 @@ public class EtReport extends PanacheEntity {
 	private Long metadatasCount = 0L;
 	private Long inputMetadatasCount = 0L;
 	private Long metadatasErrorCount = 0L;
+	private boolean dashboardReport;
 
 	@OneToMany(mappedBy = "report", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<EtMetadata> metadatas = new ArrayList<>();
@@ -46,6 +47,14 @@ public class EtReport extends PanacheEntity {
 		this.coin = coin;
 		this.reportDate = reportDate;
 		this.reportType = reportType;
+	}
+	
+	public boolean isDashboardReport() {
+		return dashboardReport;
+	}
+	
+	public void setDashboardReport(boolean dashboardReport) {
+		this.dashboardReport = dashboardReport;
 	}
 
 	public EtCoin getCoin() {
@@ -174,14 +183,14 @@ public class EtReport extends PanacheEntity {
 	 
 	public static List<EtReport> getReportsWithMissingMetadatas(Long coinId, long metadatasSize, ReportType reportType) {
 		return EtReport.find(
-				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.metadatasCount < ?2 and r.reportType = ?3 order by r.reportDate asc",
+				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.metadatasCount < ?2 and r.reportType = ?3 and r.dashboardReport is false order by r.reportDate asc",
 				coinId, metadatasSize, reportType).list();
 	}
 
 
 	public static List<EtReport> getReportsWithErrorMetadatas(Long coinId, ReportType reportType) {
 		return EtReport.find(
-				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.metadatasErrorCount > 0 and r.reportType = ?2 order by r.reportDate asc",
+				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.metadatasErrorCount > 0 and r.reportType = ?2 and r.dashboardReport is false order by r.reportDate asc",
 				coinId, reportType).list();
 	}
 

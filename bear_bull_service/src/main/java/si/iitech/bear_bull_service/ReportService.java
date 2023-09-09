@@ -55,6 +55,7 @@ public class ReportService {
 		if (report == null) {
 			report = new EtReport(coin, reportDate, reportType);
 		}
+		report.setDashboardReport(true);
 		report.setReportDate(reportDate);
 		dashboard.setReportType(reportType);
 		dashboard.setReportDate(reportDate);

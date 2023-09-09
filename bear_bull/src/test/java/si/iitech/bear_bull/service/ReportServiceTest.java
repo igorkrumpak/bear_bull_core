@@ -48,14 +48,11 @@ public class ReportServiceTest extends CryptoTest {
 		assertEquals(EtMetadataCalculator.listAllForInput().size(),
 				reports.get(0).getInputMetadatasCount());
 
-		// add new calculator definition
-
 		reportService.updateAllReportsMetadatas(EtCoin.findByCoinId(BTC), ReportType.DAILY);
 
 		reports = EtReport.list("select report from EtReport report where report.coin.coinId = ?1",
 				BTC);
 		assertEquals(115, reports.size());
-		// number of metadatas changes
 		assertEquals(EtMetadataCalculator.listAllForReportOrderByIndexAsc().size(),
 				reports.get(0).getMetadatas().size());
 
