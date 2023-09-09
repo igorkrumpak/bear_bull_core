@@ -33,7 +33,7 @@
     <org.projectlombok.lombok>1.18.22</org.projectlombok.lombok>
     <com.squareup.retrofit2.retrofit>2.9.0</com.squareup.retrofit2.retrofit>
     <com.squareup.retrofit2.converter-jackson>2.9.0</com.squareup.retrofit2.converter-jackson>
-    
+    <net.bull.javamelody.javamelody-core>1.91.0</net.bull.javamelody.javamelody-core>
   </properties>
   <dependencyManagement>
     <dependencies>

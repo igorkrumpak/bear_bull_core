@@ -30,6 +30,11 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-quartz</artifactId>
     </dependency>
+    <dependency>
+      <groupId>net.bull.javamelody</groupId>
+      <artifactId>javamelody-core</artifactId>
+      <version>${net.bull.javamelody.javamelody-core}</version>
+    </dependency>
     
   </dependencies>
   <build>
