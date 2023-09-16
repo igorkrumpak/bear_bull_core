@@ -8,11 +8,11 @@
   </parent>
   <artifactId>bear_bull</artifactId>
   <dependencies>
-    <dependency>
-      <groupId>si.iitech</groupId>
-      <artifactId>bear_bull_service</artifactId>
-      <version>${si.iitech.bear_bull_core}</version>
-    </dependency>
+	<dependency>
+      <groupId>com.github.librepdf</groupId>
+      <artifactId>openpdf</artifactId>
+      <version>${com.github.librepdf.openpdf}</version>
+	</dependency>
     <dependency>
       <groupId>si.iitech</groupId>
       <artifactId>bear_bull_test</artifactId>
@@ -35,6 +35,35 @@
       <artifactId>javamelody-core</artifactId>
       <version>${net.bull.javamelody.javamelody-core}</version>
     </dependency>
+    <dependency>
+		<groupId>si.iitech</groupId>
+		<artifactId>coingecko</artifactId>
+		<version>${si.iitech.bear_bull_core}</version>
+	</dependency>
+    <dependency>
+		<groupId>io.quarkus</groupId>
+		<artifactId>quarkus-hibernate-orm-panache</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>io.quarkus</groupId>
+		<artifactId>quarkus-reactive-routes</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>io.quarkus</groupId>
+		<artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>io.quarkus</groupId>
+		<artifactId>quarkus-arc</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>io.quarkus</groupId>
+		<artifactId>quarkus-undertow</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>io.quarkus</groupId>
+		<artifactId>quarkus-vertx</artifactId>
+	</dependency>
     
   </dependencies>
   <build>

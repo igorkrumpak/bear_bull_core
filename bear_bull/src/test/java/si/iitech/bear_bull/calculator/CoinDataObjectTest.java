@@ -17,28 +17,18 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.script.ScriptException;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
+import si.iitech.bear_bull.CryptoTest;
 import si.iitech.bear_bull.calculator.init.MetadataCalculatorDefinition;
-import si.iitech.bear_bull.calculator.init.MetadataCalculatorDefinitions;
 import si.iitech.bear_bull_calculator.CoinDataObject;
 import si.iitech.bear_bull_entities.EtMetadataCalculator;
 import si.iitech.bear_bull_entities.ReportType;
-import si.iitech.bear_bull_test.BearBullAbstractTest;
 import si.iitech.util.DateUtils;
 
 @QuarkusTest
-public class CoinDataObjectTest extends BearBullAbstractTest {
-
-	@BeforeAll
-	public void init() {
-		executeInTransaction(() -> {
-			MetadataCalculatorDefinitions.createDefinitions();
-		});
-		
-	}
+public class CoinDataObjectTest extends CryptoTest {
 
 	private Map<String, Object> prepareInputCalculatedValues(TestPrice price) {
 		Map<String, Object> calculatedValues = new HashMap<>();

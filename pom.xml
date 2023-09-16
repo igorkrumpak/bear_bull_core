@@ -9,9 +9,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>coingecko</module>
-    <module>bear_bull_entities</module>
-    <module>bear_bull_calculator</module>
-    <module>bear_bull_service</module>
     <module>bear_bull</module>
     <module>bear_bull_runtime_test</module>
     <module>bear_bull_test</module>
@@ -34,6 +31,7 @@
     <com.squareup.retrofit2.retrofit>2.9.0</com.squareup.retrofit2.retrofit>
     <com.squareup.retrofit2.converter-jackson>2.9.0</com.squareup.retrofit2.converter-jackson>
     <net.bull.javamelody.javamelody-core>1.91.0</net.bull.javamelody.javamelody-core>
+    <com.github.librepdf.openpdf>1.3.30</com.github.librepdf.openpdf>
   </properties>
   <dependencyManagement>
     <dependencies>
