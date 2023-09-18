@@ -1,10 +1,10 @@
 package si.iitech.bear_bull;
 
-import javax.inject.Inject;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 
+import jakarta.inject.Inject;
 import si.iitech.bear_bull.init.Init;
 import si.iitech.bear_bull_test.BearBullAbstractTest;
 

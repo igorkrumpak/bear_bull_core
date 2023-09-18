@@ -1,13 +1,13 @@
 package si.iitech.bear_bull.init;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.runtime.configuration.ProfileManager;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 import si.iitech.bear_bull.calculator.init.MetadataCalculatorDefinitions;
 import si.iitech.bear_bull.task.Task;
 import si.iitech.bear_bull_entities.EtCoin;
@@ -32,7 +32,7 @@ public class Init {
 
 	@Inject
 	Task task;
-
+	
 	void onStart(@Observes StartupEvent ev) {
 		init();
 		if (ProfileManager.getActiveProfile().contains("dev")) {

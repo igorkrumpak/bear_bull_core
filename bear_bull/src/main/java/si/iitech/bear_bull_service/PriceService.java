@@ -8,13 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.enterprise.context.RequestScoped;
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
-
 import org.javatuples.Pair;
 
 import io.quarkus.logging.Log;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 import si.iitech.bear_bull_entities.EtCoin;
 import si.iitech.bear_bull_entities.EtPrice;
 import si.iitech.bear_bull_entities.PriceType;

@@ -11,11 +11,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.script.ScriptException;
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 import si.iitech.bear_bull.calculator.init.MetadataCalculatorDefinition;
 import si.iitech.bear_bull_calculator.CoinDataObject;
 import si.iitech.bear_bull_entities.EtCoin;

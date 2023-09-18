@@ -6,20 +6,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.TypedQuery;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.persistence.TypedQuery;
 
 @Entity
 @Table(name = "REPORT")
@@ -183,14 +182,14 @@ public class EtReport extends PanacheEntity {
 	 
 	public static List<EtReport> getReportsWithMissingMetadatas(Long coinId, long metadatasSize, ReportType reportType) {
 		return EtReport.find(
-				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.metadatasCount < ?2 and r.reportType = ?3 and r.dashboardReport is false order by r.reportDate asc",
+				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.metadatasCount < ?2 and r.reportType = ?3 and r.dashboardReport = false order by r.reportDate asc",
 				coinId, metadatasSize, reportType).list();
 	}
 
 
 	public static List<EtReport> getReportsWithErrorMetadatas(Long coinId, ReportType reportType) {
 		return EtReport.find(
-				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.metadatasErrorCount > 0 and r.reportType = ?2 and r.dashboardReport is false order by r.reportDate asc",
+				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.metadatasErrorCount > 0 and r.reportType = ?2 and r.dashboardReport = false order by r.reportDate asc",
 				coinId, reportType).list();
 	}
 

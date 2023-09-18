@@ -1,8 +1,7 @@
 package si.iitech.bear_bull_test;
 
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
-
+import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 import si.iitech.test.AbstractTest;
 import si.iitech.test.IExecute;
 

@@ -22,7 +22,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>2.12.0.Final</quarkus.platform.version>
+    <quarkus.platform.version>3.3.3</quarkus.platform.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
     
     <si.iitech.core>1.0</si.iitech.core>
@@ -30,7 +30,7 @@
     <org.projectlombok.lombok>1.18.22</org.projectlombok.lombok>
     <com.squareup.retrofit2.retrofit>2.9.0</com.squareup.retrofit2.retrofit>
     <com.squareup.retrofit2.converter-jackson>2.9.0</com.squareup.retrofit2.converter-jackson>
-    <net.bull.javamelody.javamelody-core>1.91.0</net.bull.javamelody.javamelody-core>
+    <net.bull.javamelody.javamelody-core>2.0.1</net.bull.javamelody.javamelody-core>
     <com.github.librepdf.openpdf>1.3.30</com.github.librepdf.openpdf>
   </properties>
   <dependencyManagement>

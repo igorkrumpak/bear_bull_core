@@ -3,18 +3,15 @@ package si.iitech.bear_bull_entities;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @JsonIgnoreProperties(value = { "report", "byteArrayValue", "calculator", "error", "lastUpdate" }, allowGetters = false)
@@ -37,7 +34,7 @@ public class EtMetadata extends PanacheEntity {
 	}
 
 	@Lob
-	@Type(type = "org.hibernate.type.BinaryType")
+//	@Type(type = "org.hibernate.type.BinaryType")
 	@Column(length = 100000)
 	private byte[] byteArrayValue;
 

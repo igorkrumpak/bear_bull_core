@@ -2,11 +2,10 @@ package si.iitech.bear_bull_service;
 
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
-
 import io.quarkus.logging.Log;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 import si.iitech.bear_bull_entities.EtCoin;
 import si.iitech.coingecko.CoinGeckoApiClient;
 import si.iitech.coingecko.domain.Coins.CoinFullData;

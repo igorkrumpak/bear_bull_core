@@ -1,5 +1,6 @@
 package si.iitech.bear_bull_calculator;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,7 +16,6 @@ import si.iitech.util.ChartObject;
 import si.iitech.util.DateUtils;
 import si.iitech.util.IITechChartUtils;
 import si.iitech.util.MathUtils;
-import java.awt.Color;
 
 public class CoinDataObject {
 

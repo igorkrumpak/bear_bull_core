@@ -6,11 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
 import si.iitech.bear_bull.CryptoTest;
 import si.iitech.bear_bull.calculator.init.MetadataCalculatorDefinition;
 import si.iitech.bear_bull_entities.EtCoin;
