@@ -3,6 +3,9 @@ package si.iitech.bear_bull_entities;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
@@ -34,7 +37,7 @@ public class EtMetadata extends PanacheEntity {
 	}
 
 	@Lob
-//	@Type(type = "org.hibernate.type.BinaryType")
+	@JdbcType(VarbinaryJdbcType.class)
 	@Column(length = 100000)
 	private byte[] byteArrayValue;
 

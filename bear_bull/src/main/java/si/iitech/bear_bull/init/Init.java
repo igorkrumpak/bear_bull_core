@@ -2,7 +2,7 @@ package si.iitech.bear_bull.init;
 
 
 import io.quarkus.runtime.StartupEvent;
-import io.quarkus.runtime.configuration.ProfileManager;
+import io.quarkus.runtime.configuration.ConfigUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
@@ -35,7 +35,7 @@ public class Init {
 	
 	void onStart(@Observes StartupEvent ev) {
 		init();
-		if (ProfileManager.getActiveProfile().contains("dev")) {
+		if (ConfigUtils.getProfiles().contains("dev")) {
 			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
 			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.DAILY);
 //			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
