@@ -98,7 +98,7 @@ public class ReportService {
 			if (each.getNotation().contentEquals(MetadataCalculatorDefinition.BOLLINGER_BANDS_CHART.getNotation())) {
 				dashboard.setBollingerBandsChart(each.id);
 			}
-			if (each.getNotation().contentEquals(MetadataCalculatorDefinition.PRICE.getNotation())) {
+			if (each.getNotation().contentEquals(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation())) {
 				dashboard.setPrice(each.getDoubleValue());
 				dashboard.setPriceChartColor(each.getCalculator().getChartColor().getValue());
 				dashboard.setPriceLabel(each.getCalculator().getName());
@@ -276,7 +276,7 @@ public class ReportService {
 	private Map<String, Object> prepareInputCalculatedValues(List<EtPrice> allPricesOnDate, EtReport report) {
 		Map<String, Object> calculatedValues = new HashMap<>();
 		EtPrice price = allPricesOnDate.stream().min(Comparator.comparing(EtPrice::getPriceDate)).get();
-		calculatedValues.put(MetadataCalculatorDefinition.PRICE.getNotation(),
+		calculatedValues.put(MetadataCalculatorDefinition.OPEN_PRICE.getNotation(),
 				MathUtils.dynamicRound(price.getPrice()));
 		calculatedValues.put(MetadataCalculatorDefinition.TOTAL_VOLUME.getNotation(),
 				MathUtils.noDecimalRound(price.getTotalVolumeValue()));

@@ -68,7 +68,7 @@ public class CoinDataObject {
 		double sumOfSquares = 0.0;
 		List<CoinDataObject> temp = getPrices(days);
 		for (CoinDataObject each : temp) {
-			sumOfSquares = sumOfSquares + MathUtils.square(each.getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation()) - avg);
+			sumOfSquares = sumOfSquares + MathUtils.square(each.getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation()) - avg);
 		}
 		return MathUtils.round2DecimalPlaces(MathUtils.squareRoot(sumOfSquares / days));
 	}
@@ -76,7 +76,7 @@ public class CoinDataObject {
 	public Double avg(int days) {
 		validate(days);
 		return coinDataObjects.stream().limit(days)
-				.mapToDouble(each -> each.getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation())).average().stream()
+				.mapToDouble(each -> each.getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation())).average().stream()
 				.map(MathUtils::dynamicRound).findFirst().orElse(0.0);
 	}
 
@@ -169,8 +169,8 @@ public class CoinDataObject {
 		for (int i = 0; i < temp.size(); i++) {
 			if (i - 1 < 0)
 				continue;
-			Double currentPrice = temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
-			Double previusPrice = temp.get(i - 1).getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
+			Double currentPrice = temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
+			Double previusPrice = temp.get(i - 1).getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
 			if (currentPrice > previusPrice) {
 				sum = sum + currentPrice - previusPrice;
 			}
@@ -185,8 +185,8 @@ public class CoinDataObject {
 		for (int i = 0; i < temp.size(); i++) {
 			if (i - 1 < 0)
 				continue;
-			Double currentPrice = temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
-			Double previusPrice = temp.get(i - 1).getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
+			Double currentPrice = temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
+			Double previusPrice = temp.get(i - 1).getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
 			if (currentPrice < previusPrice) {
 				sum = sum + previusPrice - currentPrice;
 			}
@@ -201,8 +201,8 @@ public class CoinDataObject {
 		for (int i = 0; i < temp.size(); i++) {
 			if (i - 1 < 0)
 				continue;
-			Double currentPrice = temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
-			Double previusPrice = temp.get(i - 1).getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
+			Double currentPrice = temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
+			Double previusPrice = temp.get(i - 1).getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
 			if (currentPrice > previusPrice) {
 				sum = sum + temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.TOTAL_VOLUME.getNotation());
 			}
@@ -217,8 +217,8 @@ public class CoinDataObject {
 		for (int i = 0; i < temp.size(); i++) {
 			if (i - 1 < 0)
 				continue;
-			Double currentPrice = temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
-			Double previusPrice = temp.get(i - 1).getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
+			Double currentPrice = temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
+			Double previusPrice = temp.get(i - 1).getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
 			if (currentPrice < previusPrice) {
 				sum = sum + temp.get(i).getDoubleOrNull(MetadataCalculatorDefinition.TOTAL_VOLUME.getNotation());
 			}

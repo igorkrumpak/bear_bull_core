@@ -234,7 +234,7 @@ public class BearBullTest extends AbstractTest {
 			List<EtMetadata> metadatas = each.getMetadatas();
 			System.out.println(
 					getMetadataStringValue(metadatas, MetadataCalculatorDefinition.DATE.getNotation()) + ";" +
-							getMetadataDoubleValue(metadatas, MetadataCalculatorDefinition.PRICE.getNotation()) + ";" +
+							getMetadataDoubleValue(metadatas, MetadataCalculatorDefinition.OPEN_PRICE.getNotation()) + ";" +
 							getMetadataDoubleValue(metadatas, MetadataCalculatorDefinition.RSI_14_PERIODS.getNotation()) + ";" +
 							getMetadataDoubleValue(metadatas, MetadataCalculatorDefinition.MFI_14_PERIODS.getNotation()) + ";" +
 							getMetadataDoubleValue(metadatas, MetadataCalculatorDefinition.AVARAGE_20_PERIODS.getNotation()) + ";" +
@@ -278,10 +278,10 @@ public class BearBullTest extends AbstractTest {
 						+ "') < 25) coinDataObject.addTag('Oversold', 'green'); \n" +
 						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.RSI_14_PERIODS.getNotation()
 						+ "') > 75) coinDataObject.addTag('Overbought', 'volcano'); \n" +
-						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.PRICE.getNotation()
+						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.OPEN_PRICE.getNotation()
 						+ "') > coinDataObject.getDouble('" + MetadataCalculatorDefinition.UPPER_BAND_20_PERIODS.getNotation()
 						+ "')) coinDataObject.addTag('Above Bollinger band', 'volcano'); \n" +
-						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.PRICE.getNotation()
+						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.OPEN_PRICE.getNotation()
 						+ "') < coinDataObject.getDouble('" + MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation()
 						+ "')) coinDataObject.addTag('Below Bollinger band', 'green'); \n" +
 						" if (100 - coinDataObject.getDouble('" + MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation()
@@ -295,7 +295,7 @@ public class BearBullTest extends AbstractTest {
 					|| each.getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()).isEmpty())
 				continue;
 			System.out.println(each.getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()));
-			System.out.println(each.getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation()));
+			System.out.println(each.getDoubleOrNull(MetadataCalculatorDefinition.OPEN_PRICE.getNotation()));
 			System.out.println(each.getStringOrNull(testTag));
 		}
 	}
@@ -313,10 +313,10 @@ public class BearBullTest extends AbstractTest {
 						+ "') < 25) coinDataObject.addTag('Oversold', 'green'); \n" +
 						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.RSI_14_PERIODS.getNotation()
 						+ "') > 75) coinDataObject.addTag('Overbought', 'volcano'); \n" +
-						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.PRICE.getNotation()
+						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.OPEN_PRICE.getNotation()
 						+ "') > coinDataObject.getDouble('" + MetadataCalculatorDefinition.UPPER_BAND_20_PERIODS.getNotation()
 						+ "')) coinDataObject.addTag('Above Bollinger band', 'volcano'); \n" +
-						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.PRICE.getNotation()
+						" if (coinDataObject.getDouble('" + MetadataCalculatorDefinition.OPEN_PRICE.getNotation()
 						+ "') < coinDataObject.getDouble('" + MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation()
 						+ "')) coinDataObject.addTag('Below Bollinger band', 'green'); \n" +
 						" if (100 - coinDataObject.getDouble('" + MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation()
@@ -330,7 +330,7 @@ public class BearBullTest extends AbstractTest {
 					|| each.getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()).isEmpty())
 				continue;
 			System.out.println(each.getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()));
-			System.out.println(each.getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation()));
+			System.out.println(each.getDoubleOrNull(MetadataCalculatorDefinition.OPEN_PRICE.getNotation()));
 			System.out.println(each.getStringOrNull(testTag));
 		}
 	}
@@ -402,7 +402,7 @@ public class BearBullTest extends AbstractTest {
 		buySellChart.setCode(
 				"var execute = function(coinDataObject) {\n" +
 						"	return coinDataObject.chart(1120, 480, coinDataObject.getChartObject('"
-						+ MetadataCalculatorDefinition.PRICE.getNotation() + "', '" + MetadataCalculatorDefinition.PRICE.getName() + "', "
+						+ MetadataCalculatorDefinition.OPEN_PRICE.getNotation() + "', '" + MetadataCalculatorDefinition.OPEN_PRICE.getName() + "', "
 						+ reports.size() + ", Color.RED));\n" +
 						"};\n");
 
@@ -422,7 +422,7 @@ public class BearBullTest extends AbstractTest {
 			}
 			coinDataObject.getCoinDataObjects().addAll(previusCoidDataObjects);
 			previusCoidDataObjects.add(0, coinDataObject);
-			Double currentPrice = coinDataObject.getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
+			Double currentPrice = coinDataObject.getDoubleOrNull(MetadataCalculatorDefinition.OPEN_PRICE.getNotation());
 
 			Boolean shouldBuy = coinDataObject.getBooleanOrNull(BUY);
 			Boolean shouldSell = coinDataObject.getBooleanOrNull(SELL);
@@ -503,7 +503,7 @@ public class BearBullTest extends AbstractTest {
 		buyValueCalculator.setCode(
 				"var execute = function(coinDataObject) {\n" +
 						" if (coinDataObject.getDouble('" + BUY + "') > 0.0) {\n" +
-						" 	return coinDataObject.getDouble('" + MetadataCalculatorDefinition.PRICE.getNotation() + "');\n" +
+						" 	return coinDataObject.getDouble('" + MetadataCalculatorDefinition.OPEN_PRICE.getNotation() + "');\n" +
 						" }\n" +
 						"return 0.0;\n" +
 						"};\n");
@@ -516,7 +516,7 @@ public class BearBullTest extends AbstractTest {
 		sellValueCalculator.setCode(
 				"var execute = function(coinDataObject) {\n" +
 						" if (coinDataObject.getDouble('" + SELL + "') > 0.0) {\n" +
-						" 	return coinDataObject.getDouble('" + MetadataCalculatorDefinition.PRICE.getNotation() + "');\n" +
+						" 	return coinDataObject.getDouble('" + MetadataCalculatorDefinition.OPEN_PRICE.getNotation() + "');\n" +
 						" }\n" +
 						"return 0.0;\n" +
 						"};\n");
@@ -529,8 +529,8 @@ public class BearBullTest extends AbstractTest {
 		buySellChart.setCode(
 				"var execute = function(coinDataObject) {\n" +
 						"	return coinDataObject.chartWithAllDetails('Chart with all details', 1200, 600, " +
-						"coinDataObject.getChartObject('" + MetadataCalculatorDefinition.PRICE.getNotation() + "', '"
-						+ MetadataCalculatorDefinition.PRICE.getName() + "', " + reports.size() + ", Color.BLUE) " +
+						"coinDataObject.getChartObject('" + MetadataCalculatorDefinition.OPEN_PRICE.getNotation() + "', '"
+						+ MetadataCalculatorDefinition.OPEN_PRICE.getName() + "', " + reports.size() + ", Color.BLUE) " +
 						// ", coinDataObject.getChartObject('" + SELL_VALUE + "', '" + SELL_VALUE + "',
 						// " + reports.size() + ", Color.RED) " +
 						// ", coinDataObject.getChartObject('" + BUY_VALUE + "', '" + BUY_VALUE + "', "
@@ -564,7 +564,7 @@ public class BearBullTest extends AbstractTest {
 			}
 			coinDataObject.getCoinDataObjects().addAll(previusCoidDataObjects);
 			previusCoidDataObjects.add(0, coinDataObject);
-			Double currentPrice = coinDataObject.getDoubleOrNull(MetadataCalculatorDefinition.PRICE.getNotation());
+			Double currentPrice = coinDataObject.getDoubleOrNull(MetadataCalculatorDefinition.OPEN_PRICE.getNotation());
 			// Double rsi = coinDataObject.getDoubleOrNull(MetadataCalculatorDefinition.RSI_14_PERIODS.getNotation());
 			// Double mfi = coinDataObject.getDoubleOrNull(MetadataCalculatorDefinition.MFI_14_PERIODS.getNotation());
 			// Double avg200 =
@@ -646,7 +646,7 @@ public class BearBullTest extends AbstractTest {
 				"var execute = function(coinDataObject) {\n" +
 						"	return " +
 						" (" + shouldUseBand + " == false || coinDataObject.getDouble('"
-						+ MetadataCalculatorDefinition.PRICE.getNotation() + "') < coinDataObject.getDouble('"
+						+ MetadataCalculatorDefinition.OPEN_PRICE.getNotation() + "') < coinDataObject.getDouble('"
 						+ MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation() + "')) " +
 						" && (" + shouldUseRSI + " == false || coinDataObject.getDouble('"
 						+ MetadataCalculatorDefinition.RSI_14_PERIODS.getNotation() + "') < " + rsiLower + ") " +
@@ -656,7 +656,7 @@ public class BearBullTest extends AbstractTest {
 				"var execute = function(coinDataObject) {\n" +
 						"	return " +
 						" (" + shouldUseBand + " == false || coinDataObject.getDouble('"
-						+ MetadataCalculatorDefinition.PRICE.getNotation() + "') > coinDataObject.getDouble('"
+						+ MetadataCalculatorDefinition.OPEN_PRICE.getNotation() + "') > coinDataObject.getDouble('"
 						+ MetadataCalculatorDefinition.UPPER_BAND_20_PERIODS.getNotation() + "')) " +
 						" && (" + shouldUseRSI + " == false || coinDataObject.getDouble('"
 						+ MetadataCalculatorDefinition.RSI_14_PERIODS.getNotation() + "') > " + rsiUpper + ") " +
@@ -738,7 +738,7 @@ public class BearBullTest extends AbstractTest {
 												"var execute = function(coinDataObject) {\n" +
 														"	return " +
 														" (" + shouldUseBand + " == false || coinDataObject.getDouble('"
-														+ MetadataCalculatorDefinition.PRICE.getNotation()
+														+ MetadataCalculatorDefinition.OPEN_PRICE.getNotation()
 														+ "') < coinDataObject.getDouble('"
 														+ MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation() + "')) " +
 														" && (" + shouldUseRSI
@@ -751,7 +751,7 @@ public class BearBullTest extends AbstractTest {
 												"var execute = function(coinDataObject) {\n" +
 														"	return " +
 														" (" + shouldUseBand + " == false || coinDataObject.getDouble('"
-														+ MetadataCalculatorDefinition.PRICE.getNotation()
+														+ MetadataCalculatorDefinition.OPEN_PRICE.getNotation()
 														+ "') > coinDataObject.getDouble('"
 														+ MetadataCalculatorDefinition.UPPER_BAND_20_PERIODS.getNotation() + "')) " +
 														" && (" + shouldUseRSI

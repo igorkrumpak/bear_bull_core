@@ -32,7 +32,7 @@ public class CoinDataObjectTest extends CryptoTest {
 
 	private Map<String, Object> prepareInputCalculatedValues(TestPrice price) {
 		Map<String, Object> calculatedValues = new HashMap<>();
-		calculatedValues.put(MetadataCalculatorDefinition.PRICE.getNotation(), price.getPrice());
+		calculatedValues.put(MetadataCalculatorDefinition.OPEN_PRICE.getNotation(), price.getPrice());
 		calculatedValues.put(MetadataCalculatorDefinition.TOTAL_VOLUME.getNotation(), price.getTotalVolumeValue());
 		calculatedValues.put(MetadataCalculatorDefinition.MARKET_CAP.getNotation(), price.getMarketCapValue());
 		calculatedValues.put(MetadataCalculatorDefinition.DATE.getNotation(), DateUtils.formatDateTime(price.getPriceDate()));
@@ -466,7 +466,7 @@ public class CoinDataObjectTest extends CryptoTest {
 						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.UPPER_BAND_20_PERIODS.getNotation()),
 						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation()),
 						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.BOLLINGER_BANDS_CHART.getNotation()),
-						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PRICE.getNotation())));
+						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.OPEN_PRICE.getNotation())));
 
 		ByteArrayInputStream inStreambj = new ByteArrayInputStream(
 				coinDataObject2.getByteArray(MetadataCalculatorDefinition.BOLLINGER_BANDS_CHART.getNotation()));
@@ -605,7 +605,7 @@ public class CoinDataObjectTest extends CryptoTest {
 				prepareInputCalculatedValues(new TestPrice(90.70, date(22, 5, 2020), 0.0, 18730.0)),
 				prices,
 				Arrays.asList(
-						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PRICE.getNotation()),
+						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.OPEN_PRICE.getNotation()),
 						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PERCENT_FROM_ATH.getNotation())));
 
 		assertEquals(-76.62, coinDataObject.getDouble(MetadataCalculatorDefinition.PERCENT_FROM_ATH.getNotation()));
@@ -621,7 +621,7 @@ public class CoinDataObjectTest extends CryptoTest {
 				prepareInputCalculatedValues(new TestPrice(90.70, date(22, 5, 2020), 0.0, 18730.0)),
 				prices,
 				Arrays.asList(
-						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PRICE.getNotation()),
+						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.OPEN_PRICE.getNotation()),
 						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PERCENT_FROM_LAST_PERIOD.getNotation())));
 
 		assertEquals(-2.16, coinDataObject.getDouble(MetadataCalculatorDefinition.PERCENT_FROM_LAST_PERIOD.getNotation()));
@@ -634,7 +634,7 @@ public class CoinDataObjectTest extends CryptoTest {
 				prepareInputCalculatedValues(new TestPrice(95.70, date(22, 5, 2020), 0.0, 18730.0)),
 				prices,
 				Arrays.asList(
-						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PRICE.getNotation()),
+						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.OPEN_PRICE.getNotation()),
 						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PERCENT_FROM_LAST_PERIOD.getNotation())));
 
 		assertEquals(3.24, coinDataObject.getDouble(MetadataCalculatorDefinition.PERCENT_FROM_LAST_PERIOD.getNotation()));
@@ -686,7 +686,7 @@ public class CoinDataObjectTest extends CryptoTest {
 				prepareInputCalculatedValues(new TestPrice(90.70, date(22, 5, 2020), 0.0, 18730.0)),
 				prices,
 				Arrays.asList(
-						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PRICE.getNotation()),
+						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.OPEN_PRICE.getNotation()),
 						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PERCENT_FROM_ATH.getNotation())));
 
 		assertEquals(-76.62, coinDataObject1.getDouble(MetadataCalculatorDefinition.PERCENT_FROM_ATH.getNotation()));
@@ -698,7 +698,7 @@ public class CoinDataObjectTest extends CryptoTest {
 				prepareInputCalculatedValues(new TestPrice(1000.00, date(23, 5, 2020), 0.0, 18730.0)),
 				prices,
 				Arrays.asList(
-						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PRICE.getNotation()),
+						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.OPEN_PRICE.getNotation()),
 						EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.PERCENT_FROM_ATH.getNotation())));
 
 		assertEquals(0.0, coinDataObject2.getDouble(MetadataCalculatorDefinition.PERCENT_FROM_ATH.getNotation()));

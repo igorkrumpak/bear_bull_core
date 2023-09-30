@@ -1,1 +1,1 @@
-return MathUtils.round2DecimalPlaces(((o.getDouble('Price') / o.getPreviousCoinDataObject(1).getDouble('Price') * 100)) - 100);
+return MathUtils.round2DecimalPlaces(((o.getDouble('Closing_Price') / o.getPreviousCoinDataObject(1).getDouble('Closing_Price') * 100)) - 100);

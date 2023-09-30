@@ -142,7 +142,7 @@ public class ReportServiceTest extends CryptoTest {
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.AVARAGE_50_PERIODS.getNotation()).getNotation());
 				assertEquals("Avarage 50 Periods",
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.AVARAGE_50_PERIODS.getNotation()).getCalculator().getName());
-		assertEquals(48002.51,
+		assertEquals(48123.80,
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.AVARAGE_50_PERIODS.getNotation()).getDoubleValue(), 0.01);
 
 		assertEquals("Avarage_200_Periods",
@@ -150,7 +150,7 @@ public class ReportServiceTest extends CryptoTest {
 		assertNull(getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.AVARAGE_200_PERIODS.getNotation()).getDoubleValue());
 
 		assertEquals(50852.86,
-				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.PRICE.getNotation()).getDoubleValue(), 0.01);
+				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.OPEN_PRICE.getNotation()).getDoubleValue(), 0.01);
 
 		assertEquals(50852.86,
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.MAX_PRICE.getNotation()).getDoubleValue(), 0.01);
@@ -193,7 +193,7 @@ public class ReportServiceTest extends CryptoTest {
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.AVARAGE_200_PERIODS.getNotation()).getDoubleValue(), 0.01);
 
 		assertEquals(47816.08,
-				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.PRICE.getNotation()).getDoubleValue(), 0.01);
+				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.OPEN_PRICE.getNotation()).getDoubleValue(), 0.01);
 
 		assertEquals(47916.08,
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.MAX_PRICE.getNotation()).getDoubleValue(), 0.01);
