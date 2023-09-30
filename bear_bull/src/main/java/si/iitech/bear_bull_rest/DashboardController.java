@@ -12,7 +12,7 @@ import si.iitech.bear_bull_entities.EtDashboard;
 import si.iitech.bear_bull_entities.EtMetadata;
 import si.iitech.bear_bull_entities.EtMetadataCalculator;
 
-@Path("api/dashboard")
+@Path("/dashboard")
 public class DashboardController {
 
     @GET
