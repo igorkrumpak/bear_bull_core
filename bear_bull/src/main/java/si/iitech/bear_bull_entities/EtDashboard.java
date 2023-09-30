@@ -5,6 +5,8 @@ import java.util.List;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -19,6 +21,8 @@ public class EtDashboard extends PanacheEntity {
     private String coinSymbol;
     private String coinThumbImage;
     private Date reportDate;
+    
+    @Enumerated(EnumType.STRING)
     private ReportType reportType;
     private Long reportId;
 
