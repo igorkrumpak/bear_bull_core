@@ -12,8 +12,7 @@ export interface IDashboard {
     movingAvaragesChart: number;
     tags: string;
     percentFromATH: number;
-    percentFromYesterday: number;
-    percentFromLastWeek: number;
+    percentFromLastPeriod: number;
     position: number;
 }
 

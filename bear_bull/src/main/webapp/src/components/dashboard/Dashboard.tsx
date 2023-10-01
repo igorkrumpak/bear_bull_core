@@ -48,15 +48,9 @@ function Dashboard() {
             width: '150px',
         },
         {
-            title: '% 24h',
+            title: '% Last Period',
             render: (text: string, record: IDashboard, index: number) =>
-                <NumberFormat displayType={'text'} value={record.percentFromYesterday} suffix={'%'} thousandSeparator={false} />,
-            width: '60px',
-        },
-        {
-            title: '% 7d',
-            render: (text: string, record: IDashboard, index: number) =>
-                <NumberFormat displayType={'text'} value={record.percentFromLastWeek} suffix={'%'} thousandSeparator={false} />,
+                <NumberFormat displayType={'text'} value={record.percentFromLastPeriod} suffix={'%'} thousandSeparator={false} />,
             width: '60px',
         },
         {
