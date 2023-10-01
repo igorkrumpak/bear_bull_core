@@ -1,7 +1,7 @@
 import NumberFormat from 'react-number-format';
 import { useNavigate } from 'react-router-dom';
 import Table from 'antd/es/table/Table';
-import { Tag, Image, Card } from 'antd';
+import { Image, Card } from 'antd';
 import TooltipText from '../custom/TooltipText';
 import { IDashboard } from '../../rest/Interfaces';
 import { useDashboardData } from './useDashboardData';

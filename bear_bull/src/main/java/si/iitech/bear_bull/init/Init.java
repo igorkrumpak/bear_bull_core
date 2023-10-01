@@ -45,6 +45,12 @@ public class Init {
 //			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
 //			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
 			task.executeCreateDashboard();
+		} else {
+			task.executeCreateMissingDailyPrices();
+			task.executeCreateMissingHourlyPrices();
+			task.executeCreateDailyReport();
+			task.executeUpdateAllReportsMetadatas();
+			task.executeCreateDashboard();
 		}
 		
 	}
