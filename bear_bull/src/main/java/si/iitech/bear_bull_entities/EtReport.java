@@ -121,10 +121,10 @@ public class EtReport extends PanacheEntity {
 		return dates.size() > 0 ? dates.get(0) : null;
 	}
 
-	public static List<EtReport> getReportsAscUntil(Long coinId, Date until) {
+	public static List<EtReport> getReportsAscUntil(Long coinId, Date until, ReportType reportType) {
 		return EtReport.find(
-				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.reportDate >= ?2 order by r.reportDate asc",
-				coinId, until).list();
+				"select DISTINCT r from EtReport r join fetch r.metadatas m where r.coin.id = ?1 and r.reportDate >= ?2  AND r.reportType = ?3 order by r.reportDate asc",
+				coinId, until, reportType).list();
 	}
 
 	public static EtReport getReportWithMetadata(Long reportId) {

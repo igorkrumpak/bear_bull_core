@@ -11,13 +11,15 @@ import jakarta.ws.rs.core.Response;
 import si.iitech.bear_bull_entities.EtDashboard;
 import si.iitech.bear_bull_entities.EtMetadata;
 import si.iitech.bear_bull_entities.EtMetadataCalculator;
+import si.iitech.bear_bull_entities.ReportType;
 
 @Path("/dashboard")
 public class DashboardController {
 
+	@Path("/{reportType}")
     @GET
-    public List<EtDashboard> getLatestDashboards() {
-        List<EtDashboard> dashboards = EtDashboard.getDashboards();
+    public List<EtDashboard> getLatestDashboards(String reportType) {
+        List<EtDashboard> dashboards = EtDashboard.getDashboards(ReportType.valueOf(reportType));
         IntStream.range(0, dashboards.size()).forEach(i -> dashboards.get(i).setPosition(i + 1));
         return dashboards;
     }

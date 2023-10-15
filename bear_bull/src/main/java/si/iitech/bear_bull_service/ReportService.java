@@ -338,7 +338,7 @@ public class ReportService {
 	}
 
 	@Transactional(value = TxType.REQUIRES_NEW)
-	public Chart getChart(String coinId, Integer numberOfDays) {
+	public Chart getChart(ReportType reportType, String coinId, Integer numberOfDays) {
 		Chart chart = new Chart();
 		EtCoin coin = EtCoin.findByCoinId(coinId);
 		chart.setTitle(coin.getName());
@@ -346,7 +346,7 @@ public class ReportService {
 		if (latestReportDate == null)
 			return chart;
 		List<EtReport> reports = EtReport.getReportsAscUntil(coin.id,
-				DateUtils.addDays(latestReportDate, -numberOfDays));
+				DateUtils.addDays(latestReportDate, -numberOfDays), reportType);
 		EtMetadata tags = reports.get(reports.size() - 1).getMetadatas().stream()
 				.filter(each -> each.getNotation().contentEquals(MetadataCalculatorDefinition.TAGS.getNotation()))
 				.findFirst().orElse(null);
@@ -374,10 +374,12 @@ public class ReportService {
 			chart.addXValue(chartData);
 		}
 
-		for (EtReport report : reports) {
+		long reportsSize = reports.size();
+		for (int i = 0; i < reportsSize; i++) {
+			EtReport report = reports.get(i);
 			List<EtMetadata> metadatas = report.getMetadatas();
-			chart.addYValue(report.getReportType() == ReportType.DAILY ? DateUtils.formatDate(report.getReportDate())
-					: DateUtils.formatDateTime(report.getReportDate()));
+			boolean isLastElement = i == reportsSize -1;
+			chart.addYValue(!isLastElement ? DateUtils.formatDate(report.getReportDate()) : DateUtils.formatDateTime(report.getReportDate()));
 			for (String key : chartMap.keySet()) {
 				EtMetadata metadata = metadatas.stream().filter(each -> each.getNotation().contentEquals(key))
 						.findFirst().orElse(null);

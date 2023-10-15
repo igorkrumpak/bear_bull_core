@@ -103,11 +103,13 @@ public class Task {
 		persistTask("finishedExecuteCreateMissingHourlyPrices");
 	}
 	
-	@Scheduled(cron = "{si.iitech.crypto.task.execute_create_daily_reports}", identity = "executeCreateDailyReports", concurrentExecution = ConcurrentExecution.SKIP)
-	public void executeCreateDailyReport() {
+	@Scheduled(cron = "{si.iitech.crypto.task.execute_create_reports}", identity = "executeCreateReports", concurrentExecution = ConcurrentExecution.SKIP)
+	public void executeCreateReport() {
 		persistTask("executeCreateDailyReports");
 		for (EtCoin coin : EtCoin.listCoinsWithPrices()) {
-			reportService.createReports(coin, ReportType.DAILY);
+			for (ReportType each : ReportType.values()) {
+				reportService.createReports(coin, each);
+			}
 		}
 		persistTask("finishedExecuteCreateDailyReports");
 	}
@@ -116,7 +118,9 @@ public class Task {
 	public void executeUpdateAllReportsMetadatas() {
 		persistTask("executeUpdateAllReportsMetadatas");
 		for (EtCoin coin : EtCoin.listCoinsWithReports()) {
-			reportService.updateAllReportsMetadatas(coin, ReportType.DAILY);
+			for (ReportType each : ReportType.values()) {
+				reportService.updateAllReportsMetadatas(coin, each);
+			}
 		}
 		persistTask("finishedExecuteUpdateAllReportsMetadatas");
 	}

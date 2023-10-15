@@ -38,17 +38,17 @@ public class Init {
 		if (ConfigUtils.getProfiles().stream().filter(each -> each.contains("dev")).findAny().orElse(null) != null) {
 			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
 			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.DAILY);
-//			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
-//			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
+			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
+			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
 			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
 			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.DAILY);
-//			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
-//			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
+			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
+			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
 			task.executeCreateDashboard();
 		} else {
 			task.executeCreateMissingDailyPrices();
 			task.executeCreateMissingHourlyPrices();
-			task.executeCreateDailyReport();
+			task.executeCreateReport();
 			task.executeUpdateAllReportsMetadatas();
 			task.executeCreateDashboard();
 		}

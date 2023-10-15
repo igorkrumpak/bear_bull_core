@@ -84,6 +84,10 @@ public class EtDashboard extends PanacheEntity {
     public static List<EtDashboard> getDashboards() {
         return EtDashboard.find("order by marketCap desc").list();
     }
+    
+    public static List<EtDashboard> getDashboards(ReportType reportType) {
+        return EtDashboard.find("select dashboard from EtDashboard dashboard where dashboard.reportType = ?1 order by marketCap desc", reportType).list();
+    }
 
     public static EtDashboard findDashboard(String coinId, ReportType reportType) {
         return EtDashboard.find("coinId = ?1 and reportType = ?2", coinId, reportType).firstResult();

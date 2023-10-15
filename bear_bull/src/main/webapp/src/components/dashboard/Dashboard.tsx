@@ -10,11 +10,10 @@ import CoinTags from '../custom/CoinTags';
 
 
 
-function Dashboard() {
 
+function Dashboard() {
     const navigate = useNavigate();
     const coins = useDashboardData();
-
     const columns = [
         {
             title: '#',
