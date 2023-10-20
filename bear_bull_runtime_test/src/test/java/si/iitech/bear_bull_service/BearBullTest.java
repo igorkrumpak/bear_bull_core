@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.inject.Inject;
+import jakarta.inject.*;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -102,6 +102,7 @@ public class BearBullTest extends AbstractTest {
 		task.executeUpdateAllReportsInputMetadatas();
 	}
 
+	@Disabled
 	@Test
 	public void updateAllReportsMetadatas() {
 		for (EtCoin coin : EtCoin.listCoinsWithReports()) {
@@ -113,6 +114,13 @@ public class BearBullTest extends AbstractTest {
 	@Test
 	public void createReports() {
 		reportService.createReports(EtCoin.findByCoinId("mantle"), ReportType.DAILY);
+	}
+	
+	@Test
+	public void createReportsBitcoin() {
+		reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
+		reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
+		reportService.createDashboard(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
 	}
 
 	@Disabled

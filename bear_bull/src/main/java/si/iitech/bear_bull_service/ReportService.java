@@ -13,6 +13,7 @@ import java.util.stream.IntStream;
 
 import javax.script.ScriptException;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
@@ -247,6 +248,7 @@ public class ReportService {
 		List<Date> currentReportDates = EtReport.getReportDates(coin.id, dateUntil, reportType);
 		List<Date> missingReportDates = DateUtils.getMissingDates(
 				priceDates, currentReportDates);
+		Log.info("Found missing report dates: " + missingReportDates);
 		for (Date missingReportDate : missingReportDates) {
 			List<EtPrice> allPricesOnDate = allPricesByGroupingDate.get(missingReportDate);
 			EtReport report = new EtReport(coin, missingReportDate, reportType);

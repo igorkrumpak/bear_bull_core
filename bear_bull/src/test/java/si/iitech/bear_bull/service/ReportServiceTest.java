@@ -110,7 +110,9 @@ public class ReportServiceTest extends CryptoTest {
 	
 	@Test
 	public void testWeekyReport() {
-		setToday(date(4, 1, 2022, 10, 0));
+		setToday(date(4, 1, 2022, 10, 15));
+		reportService.createReports(EtCoin.findByCoinId(BTC), ReportType.WEEKLY);
+		setToday(date(4, 1, 2022, 11, 15));
 		reportService.createReports(EtCoin.findByCoinId(BTC), ReportType.WEEKLY);
 		executeInTransaction(() -> {
 			List<EtReport> reports = EtReport.list(
