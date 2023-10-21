@@ -248,7 +248,11 @@ public class ReportService {
 		List<Date> currentReportDates = EtReport.getReportDates(coin.id, dateUntil, reportType);
 		List<Date> missingReportDates = DateUtils.getMissingDates(
 				priceDates, currentReportDates);
+		Log.info("-----------------------------------------------");
+		Log.info("Found current report dates: " + priceDates);
+		Log.info("Found price dates: " + priceDates);
 		Log.info("Found missing report dates: " + missingReportDates);
+		Log.info("-----------------------------------------------");
 		for (Date missingReportDate : missingReportDates) {
 			List<EtPrice> allPricesOnDate = allPricesByGroupingDate.get(missingReportDate);
 			EtReport report = new EtReport(coin, missingReportDate, reportType);
