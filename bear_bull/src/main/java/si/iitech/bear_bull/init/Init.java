@@ -46,11 +46,11 @@ public class Init {
 			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
 			task.executeCreateDashboard();
 		} else {
-			task.executeCreateMissingDailyPrices();
-			task.executeCreateMissingHourlyPrices();
-			task.executeCreateReport();
-			task.executeUpdateAllReportsMetadatas();
-			task.executeCreateDashboard();
+//			task.executeCreateMissingDailyPrices();
+//			task.executeCreateMissingHourlyPrices();
+//			task.executeCreateReport();
+//			task.executeUpdateAllReportsMetadatas();
+//			task.executeCreateDashboard();
 		}
 		
 	}
