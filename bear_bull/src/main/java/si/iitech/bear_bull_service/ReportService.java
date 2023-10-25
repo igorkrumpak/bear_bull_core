@@ -1,9 +1,11 @@
 package si.iitech.bear_bull_service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -246,12 +248,13 @@ public class ReportService {
 				.collect(Collectors.toList());
 
 		List<Date> currentReportDates = EtReport.getReportDates(coin.id, dateUntil, reportType);
-		List<Date> missingReportDates = DateUtils.getMissingDates(
+		List<Date> missingReportDates = getMissingDates(
 				priceDates, currentReportDates);
 		Log.info("-----------------------------------------------");
-		Log.info("Found current report dates: " + priceDates);
-		Log.info("Found price dates: " + priceDates);
-		Log.info("Found missing report dates: " + missingReportDates);
+		Log.info("Current date: " + DateUtils.getNow());
+		Log.info("Found current report dates: " + formatDateToListOfStrings(priceDates));
+		Log.info("Found price dates: " + formatDateToListOfStrings(priceDates));
+		Log.info("Found missing report dates: " + formatDateToListOfStrings(missingReportDates));
 		Log.info("-----------------------------------------------");
 		for (Date missingReportDate : missingReportDates) {
 			List<EtPrice> allPricesOnDate = allPricesByGroupingDate.get(missingReportDate);
@@ -261,6 +264,26 @@ public class ReportService {
 		}
 		EtReport.getEntityManager().flush();
 		EtPrice.getEntityManager().clear();
+	}
+	
+	private static List<Date> getMissingDates(List<Date> mainCollection, List<Date> subCollection) {
+		Set<String> subSet = new HashSet<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		for (Date date : subCollection) {
+			subSet.add(sdf.format(date));
+		}
+		return mainCollection.stream().filter(date -> 
+		{
+			boolean doesNotContain = !subSet.contains(sdf.format(date));
+			if (doesNotContain) {
+				Log.info("mainCollection does not contain: " + date);
+			}
+			return doesNotContain;
+		}).collect(Collectors.toList());
+	}
+
+	private List<String> formatDateToListOfStrings(List<Date> priceDates) {
+		return priceDates.stream().map(each -> each.toString() + " (" + each.getTime() + ")").collect(Collectors.toList());
 	}	
 
 	private void updateReportsInputMetadatas(List<EtPrice> allPricesOnDate,
