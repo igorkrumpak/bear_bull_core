@@ -250,9 +250,11 @@ public class ReportService {
 				priceDates, currentReportDates);
 		Log.info("-----------------------------------------------");
 		Log.info("Current date: " + DateUtils.getNow());
-		Log.info("Found current report dates: " + formatDateToListOfStrings(priceDates));
+		Log.info("Found current report dates: " + formatDateToListOfStrings(currentReportDates));
 		Log.info("Found price dates: " + formatDateToListOfStrings(priceDates));
-		Log.info("Found missing report dates: " + formatDateToListOfStrings(missingReportDates));
+		if (!missingReportDates.isEmpty()) {
+			Log.info("Found missing report dates: " + formatDateToListOfStrings(missingReportDates));
+		}
 		Log.info("-----------------------------------------------");
 		for (Date missingReportDate : missingReportDates) {
 			List<EtPrice> allPricesOnDate = allPricesByGroupingDate.get(missingReportDate);
