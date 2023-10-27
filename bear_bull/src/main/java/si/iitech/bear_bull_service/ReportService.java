@@ -1,11 +1,13 @@
 package si.iitech.bear_bull_service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -226,8 +228,21 @@ public class ReportService {
 
 	@Transactional(value = TxType.REQUIRES_NEW)
 	public void createReports(EtCoin coin, ReportType reportType) {
+		Log.info("-----------------------------------------------");
+		Locale locale = Locale.getDefault();
+		Log.info("Locale: " + locale);
+		Log.info("First day of the week: " + Calendar.getInstance().getFirstDayOfWeek());
+		Log.info("Current date: " + DateUtils.getNow());
 		List<EtMetadataCalculator> metadataCalculators = EtMetadataCalculator.listAllForInput();
-		Date dateUntil = reportType.getUntilDate(EtPrice.getLatestDailyPrice(coin.id).getPriceDate());
+		Date latestDailyPriceDate = EtPrice.getLatestDailyPrice(coin.id).getPriceDate();
+		Log.info("Latest Daily Price Date: " + DateUtils.getNow());
+		Log.info("Last Week " + DateUtils.getLastWeek());
+		Log.info("End Of The Week " + DateUtils.getEndOfTheWeek(
+				DateUtils.minDate(latestDailyPriceDate, DateUtils.getLastWeek())));
+		
+		
+		Date dateUntil = reportType.getUntilDate(latestDailyPriceDate);
+		Log.info("Date until: " + dateUntil);
 		List<EtPrice> prices = EtPrice.getPrices(coin.id, dateUntil);
 
 		Map<Date, List<EtPrice>> allPricesByGroupingDate = prices.stream()
@@ -248,9 +263,8 @@ public class ReportService {
 		List<Date> currentReportDates = EtReport.getReportDates(coin.id, dateUntil, reportType);
 		List<Date> missingReportDates = DateUtils.getMissingDates(
 				priceDates, currentReportDates);
-		Log.info("-----------------------------------------------");
-		Log.info("Current date: " + DateUtils.getNow());
-		Log.info("Date until: " + dateUntil);
+		
+		
 		Log.info("Found current report dates: " + formatDateToListOfStrings(currentReportDates));
 		Log.info("Found price dates: " + formatDateToListOfStrings(priceDates));
 		if (!missingReportDates.isEmpty()) {
