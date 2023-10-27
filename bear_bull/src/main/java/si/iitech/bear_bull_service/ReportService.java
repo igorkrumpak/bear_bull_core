@@ -250,6 +250,7 @@ public class ReportService {
 				priceDates, currentReportDates);
 		Log.info("-----------------------------------------------");
 		Log.info("Current date: " + DateUtils.getNow());
+		Log.info("Date until: " + dateUntil);
 		Log.info("Found current report dates: " + formatDateToListOfStrings(currentReportDates));
 		Log.info("Found price dates: " + formatDateToListOfStrings(priceDates));
 		if (!missingReportDates.isEmpty()) {
