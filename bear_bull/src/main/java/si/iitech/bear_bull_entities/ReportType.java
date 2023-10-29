@@ -16,6 +16,11 @@ public enum ReportType {
 			return DateUtils.getEndOfDay(
 					DateUtils.minDate(latestPriceDate, DateUtils.getYesterday()));
 		}
+
+		@Override
+		public Date getLatestPeriodPriceDate(EtCoin coin) {
+			return EtPrice.getLatestDailyPrice(coin.id).getPriceDate();
+		}
 	},
 	WEEKLY {
 		@Override
@@ -28,10 +33,17 @@ public enum ReportType {
 			return DateUtils.getEndOfTheWeek(
 					DateUtils.minDate(latestPriceDate, DateUtils.getLastWeek()));
 		}
+
+		@Override
+		public Date getLatestPeriodPriceDate(EtCoin coin) {
+			return DateUtils.getWeek(EtPrice.getLatestDailyPrice(coin.id).getPriceDate());
+		}
 	};
 
 	public abstract Date getGroupingDate(Date priceDate);
 
 	public abstract Date getUntilDate(Date latestPriceDate);
+	
+	public abstract Date getLatestPeriodPriceDate(EtCoin coin);
 
 }

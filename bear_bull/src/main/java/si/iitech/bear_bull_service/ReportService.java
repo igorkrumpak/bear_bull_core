@@ -42,11 +42,11 @@ public class ReportService {
 	public void createDashboard(EtCoin coin, ReportType reportType) {
 		List<EtMetadataCalculator> calculators = EtMetadataCalculator.listAllForDashboardOrderByIndexAsc();
 		EtDashboard dashboard = EtDashboard.findDashboard(coin.getCoinId(), reportType);
-		Date latestPriceDate = DateUtils.minDate(EtPrice.getLatestDailyPrice(coin.id).getPriceDate(),
+		Date latestPeriodPriceDate = DateUtils.minDate(reportType.getLatestPeriodPriceDate(coin),
 				DateUtils.getToday());
-		List<EtPrice> allPricesOnDate = EtPrice.getPrices(coin.id, latestPriceDate,
-				DateUtils.getEndOfDay(latestPriceDate));
-		EtPrice latestPrice = allPricesOnDate.get(0);
+		List<EtPrice> allPricesOnPeriod = EtPrice.getPrices(coin.id, latestPeriodPriceDate,
+				DateUtils.getEndOfDay(latestPeriodPriceDate));
+		EtPrice latestPrice = allPricesOnPeriod.get(0);
 		Date reportDate = latestPrice.getPriceDate();
 		if (dashboard == null) {
 			dashboard = new EtDashboard();
@@ -81,7 +81,7 @@ public class ReportService {
 		List<CoinDataObject> previousCoinDataObjects = getCoinDataObjects(previousReports,
 				EtMetadataCalculator.listAllForReportOrderByIndexAsc());
 		CoinDataObject dashboardCoinDataObject = new CoinDataObject(
-				prepareInputCalculatedValues(allPricesOnDate, report),
+				prepareInputCalculatedValues(allPricesOnPeriod, report),
 				previousCoinDataObjects, calculators);
 		Map<String, EtMetadata> metadataMap = report.getMetadatas()
 				.stream()
@@ -263,8 +263,6 @@ public class ReportService {
 		List<Date> currentReportDates = EtReport.getReportDates(coin.id, dateUntil, reportType);
 		List<Date> missingReportDates = DateUtils.getMissingDates(
 				priceDates, currentReportDates);
-		
-		
 		Log.info("Found current report dates: " + formatDateToListOfStrings(currentReportDates));
 		Log.info("Found price dates: " + formatDateToListOfStrings(priceDates));
 		if (!missingReportDates.isEmpty()) {

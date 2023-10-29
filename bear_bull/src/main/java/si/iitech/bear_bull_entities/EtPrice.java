@@ -89,7 +89,7 @@ public class EtPrice extends PanacheEntity implements IPrice {
 						coinId)
 				.firstResult();
 	}
-
+	
 	public static List<EtPrice> getPrices(Long coinId, Date untilDate, PriceType priceType) {
 		TypedQuery<EtPrice> query = getEntityManager().createQuery(
 				"select price from EtPrice price where price.coin.id = ?1 and price.priceDate <= ?2 and price.type = ?3 order by price.priceDate DESC",
