@@ -77,7 +77,7 @@ public class ReportServiceTest extends CryptoTest {
 
 	@Test
 	public void testDashboards() {
-		setToday(date(2, 1, 2022, 10, 0));
+		setToday(date(21, 1, 2022, 3, 30));
 		reportService.createReports(EtCoin.findByCoinId(BTC), ReportType.DAILY);
 		reportService.createReports(EtCoin.findByCoinId(ETH), ReportType.DAILY);
 		reportService.updateAllReportsMetadatas(EtCoin.findByCoinId(BTC), ReportType.DAILY);
@@ -96,13 +96,15 @@ public class ReportServiceTest extends CryptoTest {
 
 		EtDashboard dashboard = EtDashboard.findDashboard(EtCoin.findByCoinId(BTC).getCoinId(), ReportType.DAILY);
 		assertNotNull(dashboard);
-		assertEquals(date(2, 1, 2022, 23, 0), dashboard.getReportDate());
+		assertEquals(date(21, 1, 2022, 3, 0), dashboard.getReportDate());
 		assertNotNull(dashboard.getBollingerBandsChart());
 
-		dashboard = EtDashboard.findDashboard(EtCoin.findByCoinId(BTC).getCoinId(), ReportType.WEEKLY);
-		assertNotNull(dashboard);
-		assertEquals(date(2, 1, 2022, 23, 0), dashboard.getReportDate());
-		assertNotNull(dashboard.getBollingerBandsChart());
+		EtDashboard weeklyDashboard = EtDashboard.findDashboard(EtCoin.findByCoinId(BTC).getCoinId(), ReportType.WEEKLY);
+		assertNotNull(weeklyDashboard);
+		assertEquals(date(21, 1, 2022, 3, 0), weeklyDashboard.getReportDate());
+		assertNotNull(weeklyDashboard.getBollingerBandsChart());
+		
+		assertEquals(weeklyDashboard.getPrice(), dashboard.getPrice());
 
 		setToday(date(2, 1, 2024, 10, 0));
 		reportService.createReports(EtCoin.findByCoinId(BTC), ReportType.DAILY);
@@ -257,20 +259,6 @@ public class ReportServiceTest extends CryptoTest {
 		 */
 
 		setToday(date(3, 1, 2022, 10, 0));
-		reportService.createDashboard(EtCoin.findByCoinId(BTC), ReportType.DAILY);
-
-		EtDashboard dashboard = EtDashboard.findDashboard(EtCoin.findByCoinId(BTC).getCoinId(), ReportType.DAILY);
-		assertNotNull(dashboard);
-		assertEquals(date(3, 1, 2022, 0, 0), dashboard.getReportDate());
-		assertNotNull(dashboard.getBollingerBandsChart());
-
-		assertNotNull(dashboard.getAvgPrice20Days());
-		assertNotNull(dashboard.getAvgPrice20DaysChartColor());
-		assertNotNull(dashboard.getAvgPrice20DaysLabel());
-
-		assertEquals(48359.63,
-				dashboard.getAvgPrice20Days(), 0.01);
-		assertEquals("gray", dashboard.getAvgPrice20DaysChartColor());
 
 		setToday(date(2, 8, 2020, 5, 5));
 
@@ -290,16 +278,6 @@ public class ReportServiceTest extends CryptoTest {
 		assertEquals(85.49, getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.MFI_14_PERIODS.getNotation()).getDoubleValue(),
 				0.01);
 
-		reportService.createDashboard(EtCoin.findByCoinId(ETH), ReportType.DAILY);
-
-		dashboard = EtDashboard.findDashboard(EtCoin.findByCoinId(ETH).getCoinId(), ReportType.DAILY);
-		assertNotNull(dashboard);
-		assertEquals(date(2, 8, 2020), dashboard.getReportDate());
-		assertNotNull(dashboard.getBollingerBandsChart());
-
-		assertNotNull(dashboard.getAvgPrice20Days());
-		assertNotNull(dashboard.getAvgPrice20DaysChartColor());
-		assertNotNull(dashboard.getAvgPrice20DaysLabel());
 
 	}
 

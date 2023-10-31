@@ -1,13 +1,11 @@
 package si.iitech.bear_bull_service;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,7 +13,6 @@ import java.util.stream.IntStream;
 
 import javax.script.ScriptException;
 
-import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
@@ -42,10 +39,9 @@ public class ReportService {
 	public void createDashboard(EtCoin coin, ReportType reportType) {
 		List<EtMetadataCalculator> calculators = EtMetadataCalculator.listAllForDashboardOrderByIndexAsc();
 		EtDashboard dashboard = EtDashboard.findDashboard(coin.getCoinId(), reportType);
-		Date latestPeriodPriceDate = DateUtils.minDate(reportType.getLatestPeriodPriceDate(coin),
-				DateUtils.getToday());
+		Date latestPeriodPriceDate = reportType.getStartOfPeriod(EtPrice.getLatestDailyPrice(coin.id).getPriceDate());
 		List<EtPrice> allPricesOnPeriod = EtPrice.getPrices(coin.id, latestPeriodPriceDate,
-				DateUtils.getEndOfDay(latestPeriodPriceDate));
+				reportType.getUntilDashboardReportDate(latestPeriodPriceDate));
 		EtPrice latestPrice = allPricesOnPeriod.get(0);
 		Date reportDate = latestPrice.getPriceDate();
 		if (dashboard == null) {
@@ -228,26 +224,14 @@ public class ReportService {
 
 	@Transactional(value = TxType.REQUIRES_NEW)
 	public void createReports(EtCoin coin, ReportType reportType) {
-		Log.info("-----------------------------------------------");
-		Locale locale = Locale.getDefault();
-		Log.info("Locale: " + locale);
-		Log.info("First day of the week: " + Calendar.getInstance().getFirstDayOfWeek());
-		Log.info("Current date: " + DateUtils.getNow());
 		List<EtMetadataCalculator> metadataCalculators = EtMetadataCalculator.listAllForInput();
 		Date latestDailyPriceDate = EtPrice.getLatestDailyPrice(coin.id).getPriceDate();
-		Log.info("Latest Daily Price Date: " + DateUtils.getNow());
-		Log.info("Last Week " + DateUtils.getLastWeek());
-		Log.info("End Of The Week " + DateUtils.getEndOfTheWeek(
-				DateUtils.minDate(latestDailyPriceDate, DateUtils.getLastWeek())));
-		
-		
-		Date dateUntil = reportType.getUntilDate(latestDailyPriceDate);
-		Log.info("Date until: " + dateUntil);
+		Date dateUntil = reportType.getUntilReportDate(latestDailyPriceDate);
 		List<EtPrice> prices = EtPrice.getPrices(coin.id, dateUntil);
 
 		Map<Date, List<EtPrice>> allPricesByGroupingDate = prices.stream()
 				.collect(Collectors.groupingBy(
-						each -> reportType.getGroupingDate(each.getPriceDate()),
+						each -> reportType.getStartOfPeriod(each.getPriceDate()),
 						LinkedHashMap::new,
 						Collectors.toList()));
 
@@ -263,12 +247,6 @@ public class ReportService {
 		List<Date> currentReportDates = EtReport.getReportDates(coin.id, dateUntil, reportType);
 		List<Date> missingReportDates = DateUtils.getMissingDates(
 				priceDates, currentReportDates);
-		Log.info("Found current report dates: " + formatDateToListOfStrings(currentReportDates));
-		Log.info("Found price dates: " + formatDateToListOfStrings(priceDates));
-		if (!missingReportDates.isEmpty()) {
-			Log.info("Found missing report dates: " + formatDateToListOfStrings(missingReportDates));
-		}
-		Log.info("-----------------------------------------------");
 		for (Date missingReportDate : missingReportDates) {
 			List<EtPrice> allPricesOnDate = allPricesByGroupingDate.get(missingReportDate);
 			EtReport report = new EtReport(coin, missingReportDate, reportType);
@@ -279,10 +257,6 @@ public class ReportService {
 		EtPrice.getEntityManager().clear();
 	}
 	
-	private List<String> formatDateToListOfStrings(List<Date> priceDates) {
-		return priceDates.stream().map(each -> each.toString() + " (" + each.getTime() + ")").collect(Collectors.toList());
-	}	
-
 	private void updateReportsInputMetadatas(List<EtPrice> allPricesOnDate,
 			List<EtMetadataCalculator> metadataCalculators, EtReport report) {
 		Map<String, Object> calculatedValues = prepareInputCalculatedValues(allPricesOnDate, report);

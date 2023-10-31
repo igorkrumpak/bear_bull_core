@@ -7,43 +7,46 @@ import si.iitech.util.DateUtils;
 public enum ReportType {
 	DAILY {
 		@Override
-		public Date getGroupingDate(Date priceDate) {
-			return DateUtils.getDay(priceDate);
+		public Date getStartOfPeriod(Date date) {
+			return DateUtils.getDay(date);
 		}
 
 		@Override
-		public Date getUntilDate(Date latestPriceDate) {
+		public Date getUntilReportDate(Date date) {
 			return DateUtils.getEndOfDay(
-					DateUtils.minDate(latestPriceDate, DateUtils.getYesterday()));
+					DateUtils.minDate(date, DateUtils.getYesterday()));
 		}
 
 		@Override
-		public Date getLatestPeriodPriceDate(EtCoin coin) {
-			return EtPrice.getLatestDailyPrice(coin.id).getPriceDate();
+		public Date getUntilDashboardReportDate(Date date) {
+			return DateUtils.getEndOfDay(date);
 		}
+
 	},
 	WEEKLY {
 		@Override
-		public Date getGroupingDate(Date priceDate) {
-			return DateUtils.getWeek(priceDate);
+		public Date getStartOfPeriod(Date date) {
+			return DateUtils.getWeek(date);
 		}
 
 		@Override
-		public Date getUntilDate(Date latestPriceDate) {
+		public Date getUntilReportDate(Date date) {
 			return DateUtils.getEndOfTheWeek(
-					DateUtils.minDate(latestPriceDate, DateUtils.getLastWeek()));
+					DateUtils.minDate(date, DateUtils.getLastWeek()));
 		}
 
 		@Override
-		public Date getLatestPeriodPriceDate(EtCoin coin) {
-			return DateUtils.getWeek(EtPrice.getLatestDailyPrice(coin.id).getPriceDate());
+		public Date getUntilDashboardReportDate(Date date) {
+			return DateUtils.getEndOfTheWeek(date);
 		}
+
 	};
 
-	public abstract Date getGroupingDate(Date priceDate);
+	public abstract Date getStartOfPeriod(Date priceDate);
 
-	public abstract Date getUntilDate(Date latestPriceDate);
+	public abstract Date getUntilReportDate(Date latestPriceDate);
 	
-	public abstract Date getLatestPeriodPriceDate(EtCoin coin);
+	public abstract Date getUntilDashboardReportDate(Date latestPriceDate);
+	
 
 }

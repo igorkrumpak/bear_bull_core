@@ -1,7 +1,9 @@
 INSERT INTO public.coin(id, coinid, createdat, name, symbol, largeimage, smallimage, thumbimage) VALUES(100523, 'bitcoin', '2022-02-08 23:52:48.653', 'Bitcoin', 'btc', 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579', 'https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png?1547033579');
 INSERT INTO public.coin(id, coinid, name, symbol, createdat, largeimage, smallimage, thumbimage) VALUES(100524, 'ethereum', 'Ethereum', 'eth', '2021-12-30 13:22:01.513', 'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880', 'https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880', 'https://assets.coingecko.com/coins/images/279/thumb/ethereum.png?1595348880');
 
-
+INSERT INTO public.price
+(id, marketcapvalue, price, pricedate, totalvolumevalue, type, coin_id, createdat)
+VALUES(310046999, 774235809673.4731, 40784.0, '2022-01-21 00:00:00.000', 20886475247.071327, 'DAILY', 100523, '2022-01-20 23:55:00.391');
 INSERT INTO public.price
 (id, marketcapvalue, price, pricedate, totalvolumevalue, type, coin_id, createdat)
 VALUES(310407, 760085198787.8613, 39980.0, '2022-01-21 03:00:00.000', 24995619243.62355, 'HOURLY', 100523, '2022-01-21 03:05:00.633');
