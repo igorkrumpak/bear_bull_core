@@ -20,7 +20,9 @@ public enum MetadataCalculatorDefinition {
     MAX_PRICE("", ResultType.DOUBLE, true, true, true, false, null, null, "Max Price"),
     CLOSING_PRICE("", ResultType.DOUBLE, true, true, true, true, ChartCategory.PRICE_CHART, ChartColor.BLUE, "Closing Price"),
     REPORT_TYPE("", ResultType.STRING, true, true, true, false, null, null, "Report Type"),
-
+    IS_DASHBOARD("", ResultType.BOOLEAN, true, true, true, false, null, null, "Is Dashboard"),
+    
+    CHART_Y_VALUE("yValue.js", ResultType.STRING, false, true, true, false, null, null, "Chart Y Value"),
     PERCENT_FROM_ATH("percentFromATH.js", ResultType.DOUBLE, false, true, true, false, ChartCategory.PERCENT_CHART, ChartColor.RED, "Value represents how much the asset has depreciated from its highest value."),
     PERCENT_FROM_LAST_PERIOD("percentFromLastPeriod.js", ResultType.DOUBLE, false, true, true, false, ChartCategory.PERCENT_CHART, ChartColor.BLUE, "Value represents how much the asset has depreciated from last period."),
 

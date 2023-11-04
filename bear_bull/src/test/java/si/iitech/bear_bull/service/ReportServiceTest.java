@@ -98,6 +98,10 @@ public class ReportServiceTest extends CryptoTest {
 		assertNotNull(dashboard);
 		assertEquals(date(21, 1, 2022, 3, 0), dashboard.getReportDate());
 		assertNotNull(dashboard.getBollingerBandsChart());
+		
+		EtReport dashboardReport = EtReport.findById(dashboard.getReportId());
+		assertEquals("21.01.2022 03:00",
+				getMetadata(dashboardReport.getMetadatas(), MetadataCalculatorDefinition.CHART_Y_VALUE.getNotation()).getStringValue());
 
 		EtDashboard weeklyDashboard = EtDashboard.findDashboard(EtCoin.findByCoinId(BTC).getCoinId(), ReportType.WEEKLY);
 		assertNotNull(weeklyDashboard);
@@ -105,6 +109,10 @@ public class ReportServiceTest extends CryptoTest {
 		assertNotNull(weeklyDashboard.getBollingerBandsChart());
 		
 		assertEquals(weeklyDashboard.getPrice(), dashboard.getPrice());
+		
+		EtReport weeklyDashboardReport = EtReport.findById(weeklyDashboard.getReportId());
+		assertEquals("17.01.2022 - 21.01.2022 03:00",
+				getMetadata(weeklyDashboardReport.getMetadatas(), MetadataCalculatorDefinition.CHART_Y_VALUE.getNotation()).getStringValue());
 
 		setToday(date(2, 1, 2024, 10, 0));
 		reportService.createReports(EtCoin.findByCoinId(BTC), ReportType.DAILY);
@@ -164,6 +172,9 @@ public class ReportServiceTest extends CryptoTest {
 
 		assertEquals(47816.08,
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.CLOSING_PRICE.getNotation()).getDoubleValue(), 0.01);
+		
+		assertEquals("27.12.2021 - 02.01.2022",
+				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.CHART_Y_VALUE.getNotation()).getStringValue());
 
 
 	}
@@ -198,6 +209,12 @@ public class ReportServiceTest extends CryptoTest {
 
 		assertEquals(47816.08,
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.OPEN_PRICE.getNotation()).getDoubleValue(), 0.01);
+		
+		assertEquals("02.01.2022",
+				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.CHART_Y_VALUE.getNotation()).getStringValue());
+		
+		assertEquals(false,
+				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.IS_DASHBOARD.getNotation()).getBooleanValue());
 
 		assertEquals(47916.08,
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.MAX_PRICE.getNotation()).getDoubleValue(), 0.01);

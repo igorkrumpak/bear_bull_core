@@ -40,6 +40,8 @@ public class Init {
 	
 	void onStart(@Observes StartupEvent ev) {
 		init();
+		task.executeUpdateAllReportsInputMetadatas();
+		task.executeUpdateAllReportsMetadatas();
 		if (ConfigUtils.getProfiles().stream().filter(each -> each.contentEquals("dev-test")).findAny().orElse(null) != null) {
 			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
 			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.DAILY);
@@ -64,10 +66,6 @@ public class Init {
 				DateUtils.overrideToday(DateUtils.addHours(startDate, i));
 				createPricesAndReports();
 			}
-//			task.executeCreateMissingDailyPrices();
-//			task.executeCreateMissingHourlyPrices();
-//			task.executeCreateReport();
-//			task.executeUpdateAllReportsMetadatas();
 			task.executeCreateDashboard();
 		}
 		

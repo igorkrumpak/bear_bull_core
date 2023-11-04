@@ -3,6 +3,7 @@ package si.iitech.bear_bull_calculator;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -284,6 +285,10 @@ public class CoinDataObject {
 			return String.class.cast(calculatedValues.get(notation));
 		}
 		return getStringPrivate(notation, coinDataObjects.get(daysInThePast));
+	}
+	
+	public Date getDate(String notation) throws NoSuchMethodException, ScriptException {
+		return DateUtils.parseDateTime(getString(notation, 0));
 	}
 
 	public String getString(String notation) throws NoSuchMethodException, ScriptException {

@@ -77,7 +77,7 @@ public class ReportService {
 		List<CoinDataObject> previousCoinDataObjects = getCoinDataObjects(previousReports,
 				EtMetadataCalculator.listAllForReportOrderByIndexAsc());
 		CoinDataObject dashboardCoinDataObject = new CoinDataObject(
-				prepareInputCalculatedValues(allPricesOnPeriod, report),
+				prepareInputCalculatedValues(allPricesOnPeriod, report, true),
 				previousCoinDataObjects, calculators);
 		Map<String, EtMetadata> metadataMap = report.getMetadatas()
 				.stream()
@@ -259,7 +259,7 @@ public class ReportService {
 	
 	private void updateReportsInputMetadatas(List<EtPrice> allPricesOnDate,
 			List<EtMetadataCalculator> metadataCalculators, EtReport report) {
-		Map<String, Object> calculatedValues = prepareInputCalculatedValues(allPricesOnDate, report);
+		Map<String, Object> calculatedValues = prepareInputCalculatedValues(allPricesOnDate, report, false);
 		CoinDataObject coinDataObject = new CoinDataObject(calculatedValues);
 		Set<String> existingNotations = report.getMetadatas().stream()
 				.map(EtMetadata::getNotation)
@@ -273,7 +273,7 @@ public class ReportService {
 		}
 	}
 
-	private Map<String, Object> prepareInputCalculatedValues(List<EtPrice> allPricesOnDate, EtReport report) {
+	private Map<String, Object> prepareInputCalculatedValues(List<EtPrice> allPricesOnDate, EtReport report, boolean isDashboard) {
 		Map<String, Object> calculatedValues = new HashMap<>();
 		EtPrice price = allPricesOnDate.stream().min(Comparator.comparing(EtPrice::getPriceDate)).get();
 		calculatedValues.put(MetadataCalculatorDefinition.OPEN_PRICE.getNotation(),
@@ -294,6 +294,7 @@ public class ReportService {
 				MathUtils.dynamicRound(
 						allPricesOnDate.stream().max(Comparator.comparing(EtPrice::getPriceDate)).get().getPrice()));
 		calculatedValues.put(MetadataCalculatorDefinition.REPORT_TYPE.getNotation(), report.getReportType().name());
+		calculatedValues.put(MetadataCalculatorDefinition.IS_DASHBOARD.getNotation(), isDashboard);
 		return calculatedValues;
 	}
 
@@ -379,7 +380,16 @@ public class ReportService {
 			EtReport report = reports.get(i);
 			List<EtMetadata> metadatas = report.getMetadatas();
 			boolean isLastElement = i == reportsSize -1;
-			chart.addYValue(!isLastElement ? DateUtils.formatDate(report.getReportDate()) : DateUtils.formatDateTime(report.getReportDate()));
+			EtMetadata chartYValue = metadatas.stream()
+					.filter(each -> each.getNotation().contentEquals(MetadataCalculatorDefinition.CHART_Y_VALUE.getNotation()))
+					.findFirst().orElse(null);
+			//TODO remove this after migration if over
+			if (chartYValue != null && chartYValue.getError() == null) {
+				chart.addYValue(chartYValue.getStringValue());
+			} else {
+				chart.addYValue(!isLastElement ? DateUtils.formatDate(report.getReportDate()) : DateUtils.formatDateTime(report.getReportDate()));
+			}
+			
 			for (String key : chartMap.keySet()) {
 				EtMetadata metadata = metadatas.stream().filter(each -> each.getNotation().contentEquals(key))
 						.findFirst().orElse(null);
@@ -438,9 +448,7 @@ public class ReportService {
 		Date minDate = reports.get(reports.size() - 1).getReportDate();
 		Date currentDate = reports.get(0).getReportDate();
 		ReportType reportType = reports.get(0).getReportType();
-		for (; !DateUtils.isBefore(currentDate,
-				minDate); currentDate = (reportType == ReportType.DAILY ? DateUtils.addDays(currentDate, -1)
-						: DateUtils.addWeeks(currentDate, -1))) {
+		for (; !DateUtils.isBefore(currentDate, minDate); currentDate = reportType.getPreviousPeriod(currentDate)) {
 			EtReport report = reportMap.get(currentDate);
 			if (report != null) {
 				coinDataObjects.add(new CoinDataObject(report.getCalculatedValues(), metadataCalculators));

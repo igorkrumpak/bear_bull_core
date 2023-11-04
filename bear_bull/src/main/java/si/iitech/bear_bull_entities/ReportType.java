@@ -22,6 +22,11 @@ public enum ReportType {
 			return DateUtils.getEndOfDay(date);
 		}
 
+		@Override
+		public Date getPreviousPeriod(Date date) {
+			return DateUtils.addDays(date, -1);
+		}
+
 	},
 	WEEKLY {
 		@Override
@@ -40,13 +45,19 @@ public enum ReportType {
 			return DateUtils.getEndOfTheWeek(date);
 		}
 
+		@Override
+		public Date getPreviousPeriod(Date date) {
+			return DateUtils.addWeeks(date, -1);
+		}
+
 	};
-
-	public abstract Date getStartOfPeriod(Date priceDate);
-
-	public abstract Date getUntilReportDate(Date latestPriceDate);
+	public abstract Date getPreviousPeriod(Date date);
 	
-	public abstract Date getUntilDashboardReportDate(Date latestPriceDate);
+	public abstract Date getStartOfPeriod(Date date);
+
+	public abstract Date getUntilReportDate(Date date);
+	
+	public abstract Date getUntilDashboardReportDate(Date date);
 	
 
 }

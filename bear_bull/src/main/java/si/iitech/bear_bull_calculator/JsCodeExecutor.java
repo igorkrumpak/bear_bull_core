@@ -9,7 +9,7 @@ import javax.script.ScriptException;
 
 public class JsCodeExecutor {
 
-	private static final String imports = "var MathUtils = Java.type('si.iitech.util.MathUtils'); var Color = Java.type('java.awt.Color');";
+	private static final String imports = "var MathUtils = Java.type('si.iitech.util.MathUtils'); var Color = Java.type('java.awt.Color'); var DateUtils = Java.type('si.iitech.util.DateUtils');";
 
 	private static ScriptEngine engine =  new ScriptEngineManager().getEngineByName("js");
 	// "var ParseUtils = Java.type('si.iitech.lib.parser.ParserUtils');\n" +
