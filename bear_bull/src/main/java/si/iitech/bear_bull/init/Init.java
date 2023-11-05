@@ -1,11 +1,11 @@
 package si.iitech.bear_bull.init;
 
-
 import java.util.Date;
 import java.util.TimeZone;
 
 import io.quarkus.runtime.StartupEvent;
 import io.quarkus.runtime.configuration.ConfigUtils;
+import io.quarkus.scheduler.Scheduler;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
@@ -29,7 +29,7 @@ public class Init {
 	@Inject
 	CoinService coinService;
 
-	 @Inject
+	@Inject
 	ReportService reportService;
 
 	@Inject
@@ -37,12 +37,17 @@ public class Init {
 
 	@Inject
 	Task task;
-	
+
+	@Inject
+	Scheduler scheduler;
+
 	void onStart(@Observes StartupEvent ev) {
+		scheduler.pause();
 		init();
 		task.executeUpdateAllReportsInputMetadatas();
 		task.executeUpdateAllReportsMetadatas();
-		if (ConfigUtils.getProfiles().stream().filter(each -> each.contentEquals("dev-test")).findAny().orElse(null) != null) {
+		if (ConfigUtils.getProfiles().stream().filter(each -> each.contentEquals("dev-test")).findAny()
+				.orElse(null) != null) {
 			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
 			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.DAILY);
 			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
@@ -52,7 +57,8 @@ public class Init {
 			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
 			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
 			task.executeCreateDashboard();
-		} else if (ConfigUtils.getProfiles().stream().filter(each -> each.contentEquals("dev")).findAny().orElse(null) != null) {
+		} else if (ConfigUtils.getProfiles().stream().filter(each -> each.contentEquals("dev")).findAny()
+				.orElse(null) != null) {
 			DateUtils.overrideTimezone(TimeZone.getTimeZone("UTC"));
 			Date startDate = DateUtils.newDate(5, 8, 2023);
 			DateUtils.overrideToday(startDate);
@@ -61,14 +67,16 @@ public class Init {
 			coinMarket.setSymbol("btc");
 			coinMarket.setName("Bitcoin");
 			coinService.saveCoinMarket(coinMarket);
-			priceService.createPriceHistory(EtCoin.findByCoinId("bitcoin"), DateUtils.addDays(startDate, -200), startDate);
+			priceService.createPriceHistory(EtCoin.findByCoinId("bitcoin"), DateUtils.addDays(startDate, -200),
+					startDate);
 			for (int i = 0; i < 100; i++) {
 				DateUtils.overrideToday(DateUtils.addHours(startDate, i));
 				createPricesAndReports();
 			}
 			task.executeCreateDashboard();
 		}
-		
+		scheduler.resume(); 
+
 	}
 
 	private void createPricesAndReports() {
