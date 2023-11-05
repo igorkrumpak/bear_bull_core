@@ -14,6 +14,32 @@ export interface IDashboard {
     percentFromATH: number;
     percentFromLastPeriod: number;
     position: number;
+    rsi: number,
+    rsiChartColor: string,
+    rsiLabel: string,
+    mfi: number,
+	mfiChartColor: string,
+	mfiLabel: string,
+	stochasticOscillator: number,
+	stochasticOscillatorChartColor: string,
+	stochasticOscillatorLabel: string,
+	priceChartColor: string,
+	priceLabel: string,
+	upperBand: number,
+	upperBandChartColor: string,
+	upperBandLabel: string,
+	lowerBand: number,
+	lowerBandChartColor: string,
+	lowerBandLabel: string,
+	avgPrice20Periods: number,
+	avgPrice20PeriodsChartColor: string,
+	avgPrice20PeriodsLabel: string,
+	avgPrice50Periods: number,
+	avgPrice50PeriodsChartColor: string,
+	avgPrice50PeriodsLabel: string,
+	avgPrice200Periods: number,
+	avgPrice200PeriodsChartColor: string,
+	avgPrice200PeriodsLabel: string,
 }
 
 export interface IChart {
@@ -38,4 +64,10 @@ export interface CascadeOption {
     value: string | number;
     label: string;
     children?: CascadeOption[];
+}
+
+export interface TooltipDashboardChartValues {
+    color: string;
+    label: string;
+    value: number
 }

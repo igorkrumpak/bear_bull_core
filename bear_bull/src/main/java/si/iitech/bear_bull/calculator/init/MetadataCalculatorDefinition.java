@@ -27,8 +27,8 @@ public enum MetadataCalculatorDefinition {
     PERCENT_FROM_LAST_PERIOD("percentFromLastPeriod.js", ResultType.DOUBLE, false, true, true, false, ChartCategory.PERCENT_CHART, ChartColor.BLUE, "Value represents how much the asset has depreciated from last period."),
 
     AVARAGE_20_PERIODS("return o.avg(20);", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.GRAY, "Avarage price in 20 periods."),
-    AVARAGE_50_PERIODS("return o.avg(50);", ResultType.DOUBLE, false, true, true, true, ChartCategory.PRICE_CHART, ChartColor.GRAY, "Avarage price in 50 periods."),
-    AVARAGE_200_PERIODS("return o.avg(200);", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.GRAY, "Avarage price in 200 periods."),
+    AVARAGE_50_PERIODS("return o.avg(50);", ResultType.DOUBLE, false, true, true, true, ChartCategory.PRICE_CHART, ChartColor.ORANGE, "Avarage price in 50 periods."),
+    AVARAGE_200_PERIODS("return o.avg(200);", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.RED, "Avarage price in 200 periods."),
     
     DEATH_CROSS_50_PERIODS_UNDER_200_PERIODS("return o.getDouble('" + AVARAGE_50_PERIODS.getNotation() + "') < o.getDouble('" + AVARAGE_200_PERIODS.getNotation() + "');", ResultType.BOOLEAN, false, true, true, false, null, null, "Death Cross"),
     MOVING_AVARAGES_CHART("return o.chart(140, 60, o.getChartObject('" + CLOSING_PRICE.getNotation() + "', '" + CLOSING_PRICE.getName() + "', 90, Color.BLUE), o.getChartObject('" + AVARAGE_50_PERIODS.getNotation() + "', '" + AVARAGE_50_PERIODS.getName() + "', 90, Color.ORANGE), o.getChartObject('" + AVARAGE_200_PERIODS.getNotation() + "', '" + AVARAGE_200_PERIODS.getName() + "', 90, Color.RED));", ResultType.PICTURE, false, true, false, false, null, null, "Chart represents values 50-Periods avarage price and 200-Periods avarage price. <br>" + 

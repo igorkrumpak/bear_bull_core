@@ -133,6 +133,11 @@ public class ReportService {
 				dashboard.setMfiChartColor(each.getCalculator().getChartColor().getValue());
 				dashboard.setMfiLabel(each.getCalculator().getName());
 			}
+			if (each.getNotation().contentEquals(MetadataCalculatorDefinition.STOCHASTIC_OSCILLATOR_14_PERIODS.getNotation())) {
+				dashboard.setStochasticOscillator(each.getDoubleValue());
+				dashboard.setStochasticOscillatorChartColor(each.getCalculator().getChartColor().getValue());
+				dashboard.setStochasticOscillatorLabel(each.getCalculator().getName());
+			}
 			if (each.getNotation().contentEquals(MetadataCalculatorDefinition.UPPER_BAND_20_PERIODS.getNotation())) {
 				dashboard.setUpperBand(each.getDoubleValue());
 				dashboard.setUpperBandChartColor(each.getCalculator().getChartColor().getValue());
@@ -144,19 +149,19 @@ public class ReportService {
 				dashboard.setLowerBandLabel(each.getCalculator().getName());
 			}
 			if (each.getNotation().contentEquals(MetadataCalculatorDefinition.AVARAGE_20_PERIODS.getNotation())) {
-				dashboard.setAvgPrice20Days(each.getDoubleValue());
-				dashboard.setAvgPrice20DaysChartColor(each.getCalculator().getChartColor().getValue());
-				dashboard.setAvgPrice20DaysLabel(each.getCalculator().getName());
+				dashboard.setAvgPrice20Periods(each.getDoubleValue());
+				dashboard.setAvgPrice20PeriodsChartColor(each.getCalculator().getChartColor().getValue());
+				dashboard.setAvgPrice20PeriodsLabel(each.getCalculator().getName());
 			}
 			if (each.getNotation().contentEquals(MetadataCalculatorDefinition.AVARAGE_50_PERIODS.getNotation())) {
-				dashboard.setAvgPrice50Days(each.getDoubleValue());
-				dashboard.setAvgPrice50DaysChartColor(each.getCalculator().getChartColor().getValue());
-				dashboard.setAvgPrice50DaysLabel(each.getCalculator().getName());
+				dashboard.setAvgPrice50Periods(each.getDoubleValue());
+				dashboard.setAvgPrice50PeriodsChartColor(each.getCalculator().getChartColor().getValue());
+				dashboard.setAvgPrice50PeriodsLabel(each.getCalculator().getName());
 			}
 			if (each.getNotation().contentEquals(MetadataCalculatorDefinition.AVARAGE_200_PERIODS.getNotation())) {
-				dashboard.setAvgPrice200Days(each.getDoubleValue());
-				dashboard.setAvgPrice200DaysChartColor(each.getCalculator().getChartColor().getValue());
-				dashboard.setAvgPrice200DaysLabel(each.getCalculator().getName());
+				dashboard.setAvgPrice200Periods(each.getDoubleValue());
+				dashboard.setAvgPrice200PeriodsChartColor(each.getCalculator().getChartColor().getValue());
+				dashboard.setAvgPrice200PeriodsLabel(each.getCalculator().getName());
 			}
 		}
 		dashboard.persistAndFlush();

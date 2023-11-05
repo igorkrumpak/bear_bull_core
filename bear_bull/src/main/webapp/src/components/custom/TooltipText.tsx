@@ -21,7 +21,7 @@ function TooltipText({ notation }: { notation: string }) {
     }, []);
 
     return (
-        <Tooltip overlay= {description != null ? parse(description) : ''}>
+        <Tooltip placement="bottomRight" overlay= {description != null ? parse(description) : ''}>
             <QuestionCircleOutlined />
         </Tooltip>
     )

@@ -7,6 +7,7 @@ import { IDashboard } from '../../rest/Interfaces';
 import { useDashboardData } from './useDashboardData';
 import { navigateToCoinChart } from '../../utils/NavigationUtils';
 import CoinTags from '../custom/CoinTags';
+import TooltipDashboardChart from '../custom/TooltipDashboardChart';
 
 
 
@@ -22,7 +23,7 @@ function Dashboard() {
         },
         {
             title: 'Coin',
-            render: (text: string, record: IDashboard, index: number) => 
+            render: (text: string, record: IDashboard, index: number) =>
                 <div className='pointer' onClick={() => navigateToCoinChart(navigate, record.coinId)} style={{
                     display: 'flex'
                 }}>
@@ -39,7 +40,7 @@ function Dashboard() {
             ,
             width: 'auto'
         },
-    
+
         {
             title: 'Price',
             render: (text: string, record: IDashboard, index: number) =>
@@ -78,7 +79,10 @@ function Dashboard() {
                 </>
             ),
             render: (text: string, record: IDashboard, index: number) =>
-                <Image width='140px' height='60px' src={"/api/dashboard/picture/" + record.oscillatorsChart} preview={false} />,
+                <TooltipDashboardChart chart={record.oscillatorsChart} values={[
+                    {color: record.rsiChartColor, label : record.rsiLabel, value : record.rsi}, 
+                    {color: record.mfiChartColor, label : record.mfiLabel, value : record.mfi}, 
+                    {color: record.stochasticOscillatorChartColor, label : record.stochasticOscillatorLabel, value : record.stochasticOscillator}]} />,
             align: 'center' as 'center',
             width: '140px',
         },
@@ -90,7 +94,11 @@ function Dashboard() {
                 </>
             ),
             render: (text: string, record: IDashboard, index: number) =>
-                <Image width='140px' height='60px' src={"/api/dashboard/picture/" + record.bollingerBandsChart} preview={false} />,
+                <TooltipDashboardChart chart={record.bollingerBandsChart} values={[
+                    {color: record.lowerBandChartColor, label : record.lowerBandLabel, value : record.lowerBand},
+                    {color: record.upperBandChartColor, label : record.upperBandLabel, value : record.upperBand}, 
+                    {color: record.avgPrice20PeriodsChartColor, label : record.avgPrice20PeriodsLabel, value : record.avgPrice20Periods}, 
+                    {color: record.priceChartColor, label : record.priceLabel, value : record.price}]} />,
             align: 'center' as 'center',
             width: '140px',
         },
@@ -102,12 +110,15 @@ function Dashboard() {
                 </>
             ),
             render: (text: string, record: IDashboard, index: number) =>
-                <Image width='140px' height='60px' src={"/api/dashboard/picture/" + record.movingAvaragesChart} preview={false} />,
+                <TooltipDashboardChart chart={record.movingAvaragesChart} values={[
+                    {color: record.avgPrice50PeriodsChartColor, label : record.avgPrice50PeriodsLabel, value : record.avgPrice50Periods}, 
+                    {color: record.avgPrice200PeriodsChartColor, label : record.avgPrice200PeriodsLabel, value : record.avgPrice200Periods}, 
+                    {color: record.priceChartColor, label : record.priceLabel, value : record.price}]} />,
             align: 'center' as 'center',
             width: '140px',
         },
     ];
-    
+
     return (
         <div>
             <Card>
