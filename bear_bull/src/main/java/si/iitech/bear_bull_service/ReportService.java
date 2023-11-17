@@ -17,7 +17,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
 import si.iitech.bear_bull.calculator.init.MetadataCalculatorDefinition;
-import si.iitech.bear_bull_calculator.CoinDataObject;
+import si.iitech.bear_bull_calculator.CalculatorObject;
 import si.iitech.bear_bull_entities.EtCoin;
 import si.iitech.bear_bull_entities.EtDashboard;
 import si.iitech.bear_bull_entities.EtMetadata;
@@ -74,9 +74,9 @@ public class ReportService {
 				reportType);
 		if (previousReports.isEmpty())
 			return;
-		List<CoinDataObject> previousCoinDataObjects = getCoinDataObjects(previousReports,
+		List<CalculatorObject> previousCoinDataObjects = getCoinDataObjects(previousReports,
 				EtMetadataCalculator.listAllForReportOrderByIndexAsc());
-		CoinDataObject dashboardCoinDataObject = new CoinDataObject(
+		CalculatorObject dashboardCoinDataObject = new CalculatorObject(
 				prepareInputCalculatedValues(allPricesOnPeriod, report, true),
 				previousCoinDataObjects, calculators);
 		Map<String, EtMetadata> metadataMap = report.getMetadatas()
@@ -210,7 +210,7 @@ public class ReportService {
 			return;
 		Date maxReportDate = reportsToFill.stream().map(each -> each.getReportDate()).max(Date::compareTo).get();
 		List<EtReport> allReports = EtReport.getReportsDescUntil(coin.id, maxReportDate, reportType);
-		List<CoinDataObject> allCoinDataObjects = getCoinDataObjects(allReports, metadataCalculators);
+		List<CalculatorObject> allCoinDataObjects = getCoinDataObjects(allReports, metadataCalculators);
 		for (EtReport report : reportsToFill) {
 			int reportDateIndex = 
 				IntStream
@@ -265,7 +265,7 @@ public class ReportService {
 	private void updateReportsInputMetadatas(List<EtPrice> allPricesOnDate,
 			List<EtMetadataCalculator> metadataCalculators, EtReport report) {
 		Map<String, Object> calculatedValues = prepareInputCalculatedValues(allPricesOnDate, report, false);
-		CoinDataObject coinDataObject = new CoinDataObject(calculatedValues);
+		CalculatorObject coinDataObject = new CalculatorObject(calculatedValues);
 		Set<String> existingNotations = report.getMetadatas().stream()
 				.map(EtMetadata::getNotation)
 				.collect(Collectors.toSet());
@@ -303,13 +303,13 @@ public class ReportService {
 		return calculatedValues;
 	}
 
-	private void updateReportsMetadatas(List<CoinDataObject> currentAndPreviousCoinDataObjects,
+	private void updateReportsMetadatas(List<CalculatorObject> currentAndPreviousCoinDataObjects,
 			List<EtMetadataCalculator> metadataCalculators,
 			EtReport report) {
-		CoinDataObject coinDataObject = currentAndPreviousCoinDataObjects.get(0); // first dataobject is the one we are
+		CalculatorObject coinDataObject = currentAndPreviousCoinDataObjects.get(0); // first dataobject is the one we are
 																					// calculationg, next are previous
 																					// dataobjects
-		List<CoinDataObject> previousCoinDataObjects = currentAndPreviousCoinDataObjects.size() > 1
+		List<CalculatorObject> previousCoinDataObjects = currentAndPreviousCoinDataObjects.size() > 1
 				? currentAndPreviousCoinDataObjects.subList(1, currentAndPreviousCoinDataObjects.size() - 1)
 				: new ArrayList<>(0);
 		coinDataObject.addPreviousCoinDataObjects(previousCoinDataObjects);
@@ -403,7 +403,7 @@ public class ReportService {
 		}
 	}
 
-	private void updateMetadataAndReport(EtReport report, CoinDataObject coinDataObject,
+	private void updateMetadataAndReport(EtReport report, CalculatorObject coinDataObject,
 			EtMetadataCalculator metadataCalculator,
 			EtMetadata metadata) {
 		metadata.setReport(report);
@@ -441,9 +441,9 @@ public class ReportService {
 	}
 
 	// descending reports
-	private List<CoinDataObject> getCoinDataObjects(List<EtReport> reports,
+	private List<CalculatorObject> getCoinDataObjects(List<EtReport> reports,
 			List<EtMetadataCalculator> metadataCalculators) {
-		List<CoinDataObject> coinDataObjects = new ArrayList<>();
+		List<CalculatorObject> coinDataObjects = new ArrayList<>();
 		if (reports.isEmpty())
 			return coinDataObjects;
 		Map<Date, EtReport> reportMap = new HashMap<>();
@@ -456,7 +456,7 @@ public class ReportService {
 		for (; !DateUtils.isBefore(currentDate, minDate); currentDate = reportType.getPreviousPeriod(currentDate)) {
 			EtReport report = reportMap.get(currentDate);
 			if (report != null) {
-				coinDataObjects.add(new CoinDataObject(report.getCalculatedValues(), metadataCalculators));
+				coinDataObjects.add(new CalculatorObject(report.getCalculatedValues(), metadataCalculators));
 			} else {
 				coinDataObjects.add(null);
 			}

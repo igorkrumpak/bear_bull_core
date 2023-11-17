@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 import si.iitech.bear_bull.calculator.init.MetadataCalculatorDefinition;
 import si.iitech.bear_bull.task.Task;
-import si.iitech.bear_bull_calculator.CoinDataObject;
+import si.iitech.bear_bull_calculator.CalculatorObject;
 import si.iitech.bear_bull_entities.EtCoin;
 import si.iitech.bear_bull_entities.EtMetadata;
 import si.iitech.bear_bull_entities.EtMetadataCalculator;
@@ -277,7 +277,7 @@ public class BearBullTest extends AbstractTest {
 	@Test
 	public void testBitcoinTags() throws IOException, ClassNotFoundException {
 		String testTag = "testTag";
-		List<CoinDataObject> results = testNewCalculatorLogic(
+		List<CalculatorObject> results = testNewCalculatorLogic(
 				date(3, 3, 2018),
 				testTag,
 				"bitcoin",
@@ -298,7 +298,7 @@ public class BearBullTest extends AbstractTest {
 						"return coinDataObject.tags(); \n" +
 						"};\n",
 				ResultType.STRING);
-		for (CoinDataObject each : results) {
+		for (CalculatorObject each : results) {
 			if (each.getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()) == null
 					|| each.getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()).isEmpty())
 				continue;
@@ -312,7 +312,7 @@ public class BearBullTest extends AbstractTest {
 	@Test
 	public void tesBitcoinBuySellLogic() throws IOException, ClassNotFoundException {
 		String testTag = "testTag";
-		List<CoinDataObject> results = testNewCalculatorLogic(
+		List<CalculatorObject> results = testNewCalculatorLogic(
 				date(3, 3, 2018),
 				testTag,
 				"bitcoin",
@@ -333,7 +333,7 @@ public class BearBullTest extends AbstractTest {
 						"return coinDataObject.tags(); \n" +
 						"};\n",
 				ResultType.STRING);
-		for (CoinDataObject each : results) {
+		for (CalculatorObject each : results) {
 			if (each.getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()) == null
 					|| each.getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()).isEmpty())
 				continue;
@@ -343,7 +343,7 @@ public class BearBullTest extends AbstractTest {
 		}
 	}
 
-	public List<CoinDataObject> testNewCalculatorLogic(Date from, String tag, String coinId, String code,
+	public List<CalculatorObject> testNewCalculatorLogic(Date from, String tag, String coinId, String code,
 			ResultType resultType) throws ClassNotFoundException, IOException {
 		EtCoin coin = EtCoin.findByCoinId(coinId);
 		List<EtReport> reports = EtReport.getReportsAsc(coin.id, from);
@@ -359,10 +359,10 @@ public class BearBullTest extends AbstractTest {
 			calculators.add(calculator);
 		}
 
-		List<CoinDataObject> returnCoinDataObjects = new ArrayList<>();
-		List<CoinDataObject> previusCoidDataObjects = new ArrayList<>();
+		List<CalculatorObject> returnCoinDataObjects = new ArrayList<>();
+		List<CalculatorObject> previusCoidDataObjects = new ArrayList<>();
 		for (int i = 0; i < reports.size(); i++) {
-			CoinDataObject coinDataObject = new CoinDataObject(null, new ArrayList<>(), calculators);
+			CalculatorObject coinDataObject = new CalculatorObject(null, new ArrayList<>(), calculators);
 			EtReport report = reports.get(i);
 			for (EtMetadata metadata : report.getMetadatas()) {
 				if (metadata.getDoubleValue() != null) {
@@ -418,10 +418,10 @@ public class BearBullTest extends AbstractTest {
 		calculators.add(sellCalculator);
 		calculators.add(buySellChart);
 
-		List<CoinDataObject> previusCoidDataObjects = new ArrayList<>();
+		List<CalculatorObject> previusCoidDataObjects = new ArrayList<>();
 
 		for (int i = 0; i < reports.size(); i++) {
-			CoinDataObject coinDataObject = new CoinDataObject(null, new ArrayList<>(), calculators);
+			CalculatorObject coinDataObject = new CalculatorObject(null, new ArrayList<>(), calculators);
 			EtReport report = reports.get(i);
 			for (EtMetadata metadata : report.getMetadatas()) {
 				if (metadata.getDoubleValue() != null) {
@@ -560,10 +560,10 @@ public class BearBullTest extends AbstractTest {
 		calculators.add(sellValueCalculator);
 		calculators.add(buySellChart);
 
-		List<CoinDataObject> previusCoidDataObjects = new ArrayList<>();
+		List<CalculatorObject> previusCoidDataObjects = new ArrayList<>();
 
 		for (int i = 0; i < reports.size(); i++) {
-			CoinDataObject coinDataObject = new CoinDataObject(null, new ArrayList<>(), calculators);
+			CalculatorObject coinDataObject = new CalculatorObject(null, new ArrayList<>(), calculators);
 			EtReport report = reports.get(i);
 			for (EtMetadata metadata : report.getMetadatas()) {
 				if (metadata.getDoubleValue() != null) {

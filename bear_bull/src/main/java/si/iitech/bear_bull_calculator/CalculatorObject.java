@@ -18,14 +18,14 @@ import si.iitech.util.DateUtils;
 import si.iitech.util.IITechChartUtils;
 import si.iitech.util.MathUtils;
 
-public class CoinDataObject {
+public class CalculatorObject {
 
 	public List<Tag> tags = new ArrayList<>();
 	private Map<String, Object> calculatedValues = new HashMap<String, Object>();
-	private List<CoinDataObject> coinDataObjects = new ArrayList<>();
+	private List<CalculatorObject> coinDataObjects = new ArrayList<>();
 	private Map<String, String> metadataCalculators = new HashMap<>();
 
-	public CoinDataObject(Map<String, Object> calculatedValues, List<CoinDataObject> coinDataObjects,
+	public CalculatorObject(Map<String, Object> calculatedValues, List<CalculatorObject> coinDataObjects,
 			List<? extends IMetadataCalculator> metadataCalculators) {
 		this.calculatedValues = calculatedValues;
 		this.coinDataObjects = new ArrayList<>();
@@ -35,12 +35,12 @@ public class CoinDataObject {
 		.collect(Collectors.toMap(IMetadataCalculator::getNotation, IMetadataCalculator::getCode));
 	}
 
-	public void addPreviousCoinDataObjects(List<CoinDataObject> coinDataObjects) {
+	public void addPreviousCoinDataObjects(List<CalculatorObject> coinDataObjects) {
 		this.coinDataObjects.addAll(coinDataObjects);
 	}
 
 	// coin data object created from calculated values
-	public CoinDataObject(Map<String, Object> calculatedValues, List<? extends IMetadataCalculator> metadataCalculators) {
+	public CalculatorObject(Map<String, Object> calculatedValues, List<? extends IMetadataCalculator> metadataCalculators) {
 		this.calculatedValues = calculatedValues;
 		this.coinDataObjects = new ArrayList<>();
 		this.coinDataObjects.add(this);
@@ -48,17 +48,17 @@ public class CoinDataObject {
 		.collect(Collectors.toMap(IMetadataCalculator::getNotation, IMetadataCalculator::getCode));
 	}
 
-	public CoinDataObject(Map<String, Object> calculatedValues) {
+	public CalculatorObject(Map<String, Object> calculatedValues) {
 		this.calculatedValues = calculatedValues;
 		this.coinDataObjects = new ArrayList<>();
 		this.coinDataObjects.add(this);
 	}
 
-	public List<CoinDataObject> getCoinDataObjects() {
+	public List<CalculatorObject> getCoinDataObjects() {
 		return coinDataObjects;
 	}
 
-	public CoinDataObject getPreviousCoinDataObject(int days) {
+	public CalculatorObject getPreviousCoinDataObject(int days) {
 		validate(days);
 		return coinDataObjects.get(days);
 	}
@@ -67,8 +67,8 @@ public class CoinDataObject {
 		validate(days);
 		Double avg = avg(days);
 		double sumOfSquares = 0.0;
-		List<CoinDataObject> temp = getPrices(days);
-		for (CoinDataObject each : temp) {
+		List<CalculatorObject> temp = getPrices(days);
+		for (CalculatorObject each : temp) {
 			sumOfSquares = sumOfSquares + MathUtils.square(each.getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation()) - avg);
 		}
 		return MathUtils.round2DecimalPlaces(MathUtils.squareRoot(sumOfSquares / days));
@@ -81,21 +81,21 @@ public class CoinDataObject {
 				.map(MathUtils::dynamicRound).findFirst().orElse(0.0);
 	}
 
-	private void validate(int days) {
+	public void validate(int days) {
 		if (days > coinDataObjects.size()) {
 			throw new IndexOutOfBoundsException("days are out of bounds");
 		}
 	
 		for (int i = 0; i < days; i++) {
-			CoinDataObject each = coinDataObjects.get(i);
+			CalculatorObject each = coinDataObjects.get(i);
 			if (each == null) {
 				throw new RuntimeException("null prices are present");
 			}
 		}
 	}
 
-	private List<CoinDataObject> getPrices(int days) {
-		List<CoinDataObject> temp = coinDataObjects.stream().limit(days).collect(Collectors.toList());
+	private List<CalculatorObject> getPrices(int days) {
+		List<CalculatorObject> temp = coinDataObjects.stream().limit(days).collect(Collectors.toList());
 		Collections.reverse(temp);
 		return temp;
 	}
@@ -165,7 +165,7 @@ public class CoinDataObject {
 
 	public Double avarageUpMoves(int days) {
 		validate(days);
-		List<CoinDataObject> temp = getPrices(days);
+		List<CalculatorObject> temp = getPrices(days);
 		double sum = 0.0;
 		for (int i = 0; i < temp.size(); i++) {
 			if (i - 1 < 0)
@@ -181,7 +181,7 @@ public class CoinDataObject {
 
 	public Double avarageDownMoves(int days) {
 		validate(days);
-		List<CoinDataObject> temp = getPrices(days);
+		List<CalculatorObject> temp = getPrices(days);
 		double sum = 0.0;
 		for (int i = 0; i < temp.size(); i++) {
 			if (i - 1 < 0)
@@ -197,7 +197,7 @@ public class CoinDataObject {
 
 	public Double avarageVolumeUpMoves(int days) {
 		validate(days);
-		List<CoinDataObject> temp = getPrices(days);
+		List<CalculatorObject> temp = getPrices(days);
 		double sum = 0.0;
 		for (int i = 0; i < temp.size(); i++) {
 			if (i - 1 < 0)
@@ -213,7 +213,7 @@ public class CoinDataObject {
 
 	public Double avarageVolumeDownMoves(int days) {
 		validate(days);
-		List<CoinDataObject> temp = getPrices(days);
+		List<CalculatorObject> temp = getPrices(days);
 		double sum = 0.0;
 		for (int i = 0; i < temp.size(); i++) {
 			if (i - 1 < 0)
@@ -239,7 +239,7 @@ public class CoinDataObject {
 		return DateUtils.isFirstDayInMonth(DateUtils.parseDateTime(currentDate));
 	}
 
-	public Double getDoublePrivate(String notation, CoinDataObject coinDataObject)
+	public Double getDoublePrivate(String notation, CalculatorObject coinDataObject)
 			throws NoSuchMethodException, ScriptException {
 		if (coinDataObject.calculatedValues.containsKey(notation)) {
 			return Double.class.cast(coinDataObject.calculatedValues.get(notation));
@@ -273,7 +273,7 @@ public class CoinDataObject {
 		}
 	}
 
-	public String getStringPrivate(String notation, CoinDataObject coinDataObject)
+	public String getStringPrivate(String notation, CalculatorObject coinDataObject)
 			throws NoSuchMethodException, ScriptException {
 		String value = JsCodeExecutor.getStringValue(notation, metadataCalculators.get(notation), coinDataObject);
 		return value;
@@ -307,7 +307,7 @@ public class CoinDataObject {
 		}
 	}
 
-	public Boolean getBooleanPrivate(String notation, CoinDataObject coinDataObject)
+	public Boolean getBooleanPrivate(String notation, CalculatorObject coinDataObject)
 			throws NoSuchMethodException, ScriptException {
 		Boolean value = JsCodeExecutor.getBooleanValue(notation, metadataCalculators.get(notation), coinDataObject);
 		return value;

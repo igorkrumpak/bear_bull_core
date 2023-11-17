@@ -9,13 +9,14 @@ import javax.script.ScriptException;
 
 public class JsCodeExecutor {
 
-	private static final String imports = "var MathUtils = Java.type('si.iitech.util.MathUtils'); var Color = Java.type('java.awt.Color'); var DateUtils = Java.type('si.iitech.util.DateUtils');";
+	private static final String imports = 
+			"var MathUtils = Java.type('si.iitech.util.MathUtils'); " +
+			"var Color = Java.type('java.awt.Color');" +
+			"var DateUtils = Java.type('si.iitech.util.DateUtils');";
 
 	private static ScriptEngine engine =  new ScriptEngineManager().getEngineByName("js");
-	// "var ParseUtils = Java.type('si.iitech.lib.parser.ParserUtils');\n" +
-	// "var DecimalSeparator = Java.type('si.iitech.lib.parser.DecimalSeparator');";
 
-	public static Double getDoubleValue(String notation, String jsCode, CoinDataObject coinDataObject) throws NoSuchMethodException, ScriptException {
+	public static Double getDoubleValue(String notation, String jsCode, CalculatorObject coinDataObject) throws NoSuchMethodException, ScriptException {
 		Double value = getDoubleValuePrivate(jsCode, coinDataObject);
 		coinDataObject.addCalculatedValue(notation, value);
 		return value;
@@ -34,7 +35,7 @@ public class JsCodeExecutor {
 		return null;
 	}
 
-	public static String getStringValue(String notation, String jsCode, CoinDataObject coinDataObject) throws NoSuchMethodException, ScriptException {
+	public static String getStringValue(String notation, String jsCode, CalculatorObject coinDataObject) throws NoSuchMethodException, ScriptException {
 		String value = getStringValuePrivate(jsCode, coinDataObject);
 		coinDataObject.addCalculatedValue(notation, value);
 		return value;
@@ -53,7 +54,7 @@ public class JsCodeExecutor {
 		return null;
 	}
 
-	public static Boolean getBooleanValue(String notation, String jsCode, CoinDataObject coinDataObject) throws NoSuchMethodException, ScriptException {
+	public static Boolean getBooleanValue(String notation, String jsCode, CalculatorObject coinDataObject) throws NoSuchMethodException, ScriptException {
 		Boolean value = getBooleanValuePrivate(jsCode, coinDataObject);
 		coinDataObject.addCalculatedValue(notation, value);
 		return value;
@@ -72,7 +73,7 @@ public class JsCodeExecutor {
 		return null;
 	}
 
-	public static byte[] getByteArrayValue(String notation, String jsCode, CoinDataObject coinDataObject) throws NoSuchMethodException, ScriptException {
+	public static byte[] getByteArrayValue(String notation, String jsCode, CalculatorObject coinDataObject) throws NoSuchMethodException, ScriptException {
 		byte[] value = getByteArrayValuePrivate(jsCode, coinDataObject);
 		coinDataObject.addCalculatedValue(notation, value);
 		return value;

@@ -20,6 +20,12 @@
 			<groupId>si.iitech</groupId>
 			<artifactId>bear_bull_test</artifactId>
 			<version>${si.iitech.bear_bull_core}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>si.iitech</groupId>
+			<artifactId>calculator</artifactId>
+			<version>${si.iitech.core}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
