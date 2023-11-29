@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 import si.iitech.bear_bull.calculator.init.MetadataCalculatorDefinition;
 import si.iitech.bear_bull.task.Task;
-import si.iitech.bear_bull_calculator.CalculatorObject;
 import si.iitech.bear_bull_entities.EtCoin;
 import si.iitech.bear_bull_entities.EtMetadata;
 import si.iitech.bear_bull_entities.EtMetadataCalculator;
@@ -29,6 +28,7 @@ import si.iitech.bear_bull_entities.EtReport;
 import si.iitech.bear_bull_entities.ReportType;
 import si.iitech.bear_bull_entities.ResultType;
 import si.iitech.bear_bull_test.BuySellObject;
+import si.iitech.calculator.CalculatorObject;
 import si.iitech.test.AbstractTest;
 import si.iitech.util.Interval;
 

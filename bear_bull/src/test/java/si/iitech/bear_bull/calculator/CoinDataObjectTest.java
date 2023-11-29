@@ -22,9 +22,10 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 import si.iitech.bear_bull.CryptoTest;
 import si.iitech.bear_bull.calculator.init.MetadataCalculatorDefinition;
-import si.iitech.bear_bull_calculator.CalculatorObject;
 import si.iitech.bear_bull_entities.EtMetadataCalculator;
 import si.iitech.bear_bull_entities.ReportType;
+import si.iitech.calculator.CalculatorObject;
+import si.iitech.calculator.CalculatorObjectTools;
 import si.iitech.util.DateUtils;
 
 @QuarkusTest
@@ -528,7 +529,7 @@ public class CoinDataObjectTest extends CryptoTest {
 				Arrays.asList());
 
 		try {
-			assertEquals(88.7085, coinDataObject.avg(20));
+			assertEquals(88.7085, CalculatorObjectTools.avg(coinDataObject, 20, MetadataCalculatorDefinition.CLOSING_PRICE.getNotation()));
 			fail("should fail because of price hole");
 		} catch (RuntimeException e) {
 

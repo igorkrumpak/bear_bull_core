@@ -258,6 +258,9 @@ public class ReportServiceTest extends CryptoTest {
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation()).getNotation());
 		assertEquals(45033.66,
 				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation()).getDoubleValue(), 0.01);
+		
+		assertEquals(-29.28,
+				getMetadata(report.getMetadatas(), MetadataCalculatorDefinition.PERCENT_FROM_ATH.getNotation()).getDoubleValue(), 0.01);
 
 
 		report = EtReport
@@ -299,7 +302,8 @@ public class ReportServiceTest extends CryptoTest {
 	}
 
 	private EtMetadata getMetadata(List<EtMetadata> metadatas, String notation) {
-		return metadatas.stream().filter(m -> m.getNotation().contentEquals(notation)).findFirst().orElse(null);
+		EtMetadata metadata = metadatas.stream().filter(m -> m.getNotation().contentEquals(notation)).findFirst().orElse(null);
+		return metadata;
 	}
 
 }

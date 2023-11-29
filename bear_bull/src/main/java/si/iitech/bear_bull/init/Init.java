@@ -20,6 +20,7 @@ import si.iitech.bear_bull_entities.ReportType;
 import si.iitech.bear_bull_service.CoinService;
 import si.iitech.bear_bull_service.PriceService;
 import si.iitech.bear_bull_service.ReportService;
+import si.iitech.calculator.JsCodeExecutor;
 import si.iitech.coingecko.domain.Coins.CoinMarkets;
 import si.iitech.util.DateUtils;
 
@@ -44,6 +45,7 @@ public class Init {
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.pause();
 		init();
+		initCalculator();
 		task.executeUpdateAllReportsInputMetadatas();
 		task.executeUpdateAllReportsMetadatas();
 		if (ConfigUtils.getProfiles().stream().filter(each -> each.contentEquals("dev-test")).findAny()
@@ -77,6 +79,11 @@ public class Init {
 		}
 		scheduler.resume(); 
 
+	}
+
+	private void initCalculator() {
+		JsCodeExecutor.setSpecificImports("var BearBullTools = Java.type('si.iitech.bear_bull_calculator.BearBullCalculatorObjectTools');");
+		
 	}
 
 	private void createPricesAndReports() {

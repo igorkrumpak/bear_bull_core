@@ -8,10 +8,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import si.iitech.calculator.ICalculator;
 
 @Entity
 @Table(name = "METADATA_CALCULATOR")
-public class EtMetadataCalculator extends PanacheEntity implements IMetadataCalculator {
+public class EtMetadataCalculator extends PanacheEntity implements ICalculator {
 
 	private String name;
 
