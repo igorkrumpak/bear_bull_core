@@ -431,7 +431,7 @@ public class ReportService {
 					break;
 			}
 		} catch (RuntimeException | NoSuchMethodException | ScriptException e) {
-			metadata.setError(e.getMessage());
+			metadata.setError(e.getMessage().substring(0, 200));
 		}
 		report.setMetadatasCount((long) report.getMetadatas().size());
 		report.setInputMetadatasCount(
