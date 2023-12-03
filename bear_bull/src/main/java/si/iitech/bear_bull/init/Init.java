@@ -45,7 +45,6 @@ public class Init {
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.pause();
 		init();
-		initCalculator();
 		task.executeUpdateAllReportsInputMetadatas();
 		task.executeUpdateAllReportsMetadatas();
 		if (ConfigUtils.getProfiles().stream().filter(each -> each.contentEquals("dev-test")).findAny()
@@ -100,5 +99,6 @@ public class Init {
 		MetadataCalculatorDefinitions.createDefinitions();
 		EtTask.deleteAll();
 		EtError.deleteAll();
+		initCalculator();
 	}
 }

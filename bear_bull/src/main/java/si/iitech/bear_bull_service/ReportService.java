@@ -431,7 +431,7 @@ public class ReportService {
 					break;
 			}
 		} catch (RuntimeException | NoSuchMethodException | ScriptException e) {
-			metadata.setError(e.getMessage().substring(0, 200));
+			metadata.setError(e.getMessage() != null ? e.getMessage().substring(0, e.getMessage().length() < 200 ? e.getMessage().length() : 200) : "Unknown exception");
 		}
 		report.setMetadatasCount((long) report.getMetadatas().size());
 		report.setInputMetadatasCount(
