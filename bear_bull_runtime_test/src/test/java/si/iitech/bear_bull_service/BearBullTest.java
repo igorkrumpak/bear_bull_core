@@ -96,6 +96,7 @@ public class BearBullTest extends AbstractTest {
 		task.executeUpdateCoins();
 	}
 
+	@Disabled
 	@Test
 	public void executeUpdateAllReportsInputMetadatas() {
 		task.executeUpdateAllReportsInputMetadatas();
@@ -109,10 +110,9 @@ public class BearBullTest extends AbstractTest {
 		}
 	}
 	
-	@Disabled
 	@Test
 	public void createReports() {
-		reportService.createReports(EtCoin.findByCoinId("mantle"), ReportType.DAILY);
+		reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
 	}
 	
 	@Disabled
