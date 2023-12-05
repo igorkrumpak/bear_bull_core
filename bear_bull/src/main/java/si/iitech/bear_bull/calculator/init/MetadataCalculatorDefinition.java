@@ -12,7 +12,7 @@ import si.iitech.bear_bull_entities.ResultType;
 
 public enum MetadataCalculatorDefinition {
     
-	OPEN_PRICE("", ResultType.DOUBLE, true, true, true, true, ChartCategory.PRICE_CHART, ChartColor.BLUE, "Open Price"),
+	OPEN_PRICE("", ResultType.DOUBLE, true, true, true, false, ChartCategory.PRICE_CHART, ChartColor.BLUE, "Open Price"),
     DATE("", ResultType.STRING, true, true, true, false, null, null, "Date"),
     MARKET_CAP("", ResultType.DOUBLE, true, true, true, false, null, null, "Market Cap"),
     TOTAL_VOLUME("", ResultType.DOUBLE, true, true, true, false, ChartCategory.VOLUME_CHART, ChartColor.GRAY, "Total Volume"),
