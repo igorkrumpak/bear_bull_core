@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -199,32 +200,38 @@ public class ReportService {
 		EtPrice.getEntityManager().clear();
 		EtReport.getEntityManager().clear();
 	}
+	
+	public CompletableFuture<Void> updateAllReportsMetadatasAsync(EtCoin coin, ReportType reportType) {
+		return CompletableFuture.runAsync(() -> {
+			updateAllReportsMetadatas(coin, reportType);
+		});
+	}
 
 	@Transactional(value = TxType.REQUIRES_NEW)
 	public void updateAllReportsMetadatas(EtCoin coin, ReportType reportType) {
-		List<EtMetadataCalculator> metadataCalculators = EtMetadataCalculator.listAllForReportOrderByIndexAsc();
-		List<EtReport> reportsToFill = EtReport.getReportsWithMissingMetadatas(coin.id,
-				metadataCalculators.size(), reportType);
-		reportsToFill.addAll(EtReport.getReportsWithErrorMetadatas(coin.id, reportType));
-		if (reportsToFill.isEmpty())
-			return;
-		Date maxReportDate = reportsToFill.stream().map(each -> each.getReportDate()).max(Date::compareTo).get();
-		List<EtReport> allReports = EtReport.getReportsDescUntil(coin.id, maxReportDate, reportType);
-		List<CalculatorObject> allCoinDataObjects = getCoinDataObjects(allReports, metadataCalculators);
-		for (EtReport report : reportsToFill) {
-			int reportDateIndex = 
-				IntStream
-					.range(0, allCoinDataObjects.size())
-					.filter(i ->
-						 allCoinDataObjects.get(i) != null 
-						 && DateUtils.isEquals(
-							DateUtils.parseDateTime(allCoinDataObjects.get(i).getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()))
-							, report.getReportDate())).findFirst().getAsInt();
-			updateReportsMetadatas(allCoinDataObjects.subList(reportDateIndex, allCoinDataObjects.size()), metadataCalculators, report);
-			report.persist();
-		}
-		EtReport.getEntityManager().flush();
-		EtReport.getEntityManager().clear();
+			List<EtMetadataCalculator> metadataCalculators = EtMetadataCalculator.listAllForReportOrderByIndexAsc();
+			List<EtReport> reportsToFill = EtReport.getReportsWithMissingMetadatas(coin.id,
+					metadataCalculators.size(), reportType);
+			reportsToFill.addAll(EtReport.getReportsWithErrorMetadatas(coin.id, reportType));
+			if (reportsToFill.isEmpty())
+				return;
+			Date maxReportDate = reportsToFill.stream().map(each -> each.getReportDate()).max(Date::compareTo).get();
+			List<EtReport> allReports = EtReport.getReportsDescUntil(coin.id, maxReportDate, reportType);
+			List<CalculatorObject> allCoinDataObjects = getCoinDataObjects(allReports, metadataCalculators);
+			for (EtReport report : reportsToFill) {
+				int reportDateIndex = 
+					IntStream
+						.range(0, allCoinDataObjects.size())
+						.filter(i ->
+							 allCoinDataObjects.get(i) != null 
+							 && DateUtils.isEquals(
+								DateUtils.parseDateTime(allCoinDataObjects.get(i).getStringOrNull(MetadataCalculatorDefinition.DATE.getNotation()))
+								, report.getReportDate())).findFirst().getAsInt();
+				updateReportsMetadatas(allCoinDataObjects.subList(reportDateIndex, allCoinDataObjects.size()), metadataCalculators, report);
+				report.persist();
+			}
+			EtReport.getEntityManager().flush();
+			EtReport.getEntityManager().clear();
 	}
 
 	@Transactional(value = TxType.REQUIRES_NEW)

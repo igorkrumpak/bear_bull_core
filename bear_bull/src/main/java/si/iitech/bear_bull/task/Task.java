@@ -1,7 +1,9 @@
 package si.iitech.bear_bull.task;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import io.quarkus.scheduler.Scheduled;
 import io.quarkus.scheduler.Scheduled.ConcurrentExecution;
@@ -117,11 +119,14 @@ public class Task {
 	@Scheduled(cron = "{si.iitech.crypto.task.execute_update_all_reports_metadatas}", identity = "executeUpdateAllReportsMetadatas", concurrentExecution = ConcurrentExecution.SKIP)
 	public void executeUpdateAllReportsMetadatas() {
 		persistTask("executeUpdateAllReportsMetadatas");
+		List<CompletableFuture<Void>> futures = new ArrayList<CompletableFuture<Void>>();
 		for (EtCoin coin : EtCoin.listCoinsWithReports()) {
 			for (ReportType each : ReportType.values()) {
-				reportService.updateAllReportsMetadatas(coin, each);
+				futures.add(reportService.updateAllReportsMetadatasAsync(coin, each));
 			}
 		}
+		CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[futures.size()]));
+	    allFutures.join();
 		persistTask("finishedExecuteUpdateAllReportsMetadatas");
 	}
 

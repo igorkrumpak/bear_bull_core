@@ -45,18 +45,13 @@ public class Init {
 	void onStart(@Observes StartupEvent ev) {
 		scheduler.pause();
 		init();
-		task.executeUpdateAllReportsInputMetadatas();
-		task.executeUpdateAllReportsMetadatas();
 		if (ConfigUtils.getProfiles().stream().filter(each -> each.contentEquals("dev-test")).findAny()
 				.orElse(null) != null) {
 			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
 			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.DAILY);
 			reportService.createReports(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
 			reportService.createReports(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
-			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.DAILY);
-			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.DAILY);
-			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("bitcoin"), ReportType.WEEKLY);
-			reportService.updateAllReportsMetadatas(EtCoin.findByCoinId("ethereum"), ReportType.WEEKLY);
+			task.executeUpdateAllReportsMetadatas();
 			task.executeCreateDashboard();
 		} else if (ConfigUtils.getProfiles().stream().filter(each -> each.contentEquals("dev")).findAny()
 				.orElse(null) != null) {
@@ -75,6 +70,9 @@ public class Init {
 				createPricesAndReports();
 			}
 			task.executeCreateDashboard();
+		} else {
+			task.executeUpdateAllReportsInputMetadatas();
+			task.executeUpdateAllReportsMetadatas();
 		}
 		scheduler.resume(); 
 
