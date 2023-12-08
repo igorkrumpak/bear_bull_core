@@ -35,6 +35,12 @@ import si.iitech.util.StringUtils;
 
 @ApplicationScoped
 public class ReportService {
+	
+	public CompletableFuture<Void> createDashboardAsync(EtCoin coin, ReportType reportType) {
+		return CompletableFuture.runAsync(() -> {
+			createDashboard(coin, reportType);
+		});
+	}
 
 	@Transactional(value = TxType.REQUIRES_NEW)
 	public void createDashboard(EtCoin coin, ReportType reportType) {

@@ -36,11 +36,14 @@ public class Task {
 	@Scheduled(cron = "{si.iitech.crypto.task.execute_create_dashboard}", identity = "executeCreateDashboard", concurrentExecution = ConcurrentExecution.SKIP)
 	public void executeCreateDashboard() {
 		persistTask("executeCreateDashboards");
+		List<CompletableFuture<Void>> futures = new ArrayList<CompletableFuture<Void>>();
 		for (EtCoin coin : EtCoin.listCoinsWithPrices()) {
 			for (ReportType each : ReportType.values()) {
-				reportService.createDashboard(coin, each);
+				futures.add(reportService.createDashboardAsync(coin, each));
 			}
 		}
+		CompletableFuture<Void> allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[futures.size()]));
+	    allFutures.join();
 		persistTask("finishedExecuteCreateDashboards");
 	}
 	
