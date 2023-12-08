@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 import javax.script.ScriptException;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.transaction.Transactional.TxType;
@@ -44,6 +45,7 @@ public class ReportService {
 
 	@Transactional(value = TxType.REQUIRES_NEW)
 	public void createDashboard(EtCoin coin, ReportType reportType) {
+		Log.info("Creating dashboard for coin: " + coin.getName() + " report type: " + reportType.name() + " on thread with id:" + Thread.currentThread().getId());
 		List<EtMetadataCalculator> calculators = EtMetadataCalculator.listAllForDashboardOrderByIndexAsc();
 		EtDashboard dashboard = EtDashboard.findDashboard(coin.getCoinId(), reportType);
 		Date latestPeriodPriceDate = reportType.getStartOfPeriod(EtPrice.getLatestDailyPrice(coin.id).getPriceDate());
@@ -174,6 +176,7 @@ public class ReportService {
 		dashboard.persistAndFlush();
 		EtPrice.getEntityManager().clear();
 		EtReport.getEntityManager().clear();
+		Log.info("Finished Creating dashboard for coin: " + coin.getName() + " report type: " + reportType.name() + " on thread with id:" + Thread.currentThread().getId());
 	}
 
 	@Transactional(value = TxType.REQUIRES_NEW)
