@@ -77,10 +77,9 @@ public class EtPrice extends PanacheEntity implements IPrice {
 	}
 
 	public static EtPrice getLatestPrice(Long coinId, Date untilDate) {
-		return EtPrice
-				.find("select price from EtPrice price where coin.id = ?1 and price.priceDate < ?2 order by priceDate DESC",
-						coinId, untilDate)
-				.firstResult();
+		return EtPrice.find(
+				"select price from EtPrice price where coin.id = ?1 and price.priceDate < ?2 order by priceDate DESC",
+				coinId, untilDate).firstResult();
 	}
 
 	public static EtPrice getLatestDailyPrice(Long coinId) {
@@ -89,7 +88,21 @@ public class EtPrice extends PanacheEntity implements IPrice {
 						coinId)
 				.firstResult();
 	}
+
+	public static Date getLatestDailyPriceDate(Long coinId) {
+		try {
+			TypedQuery<Date> query = getEntityManager().createQuery(
+					"select price.priceDate from EtPrice price where coin.id = ?1 and type = 'DAILY' order by priceDate DESC",
+					Date.class);
+			query.setParameter(1, coinId);
+			query.setMaxResults(1);
+			return query.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 	
+
 	public static List<EtPrice> getPrices(Long coinId, Date untilDate, PriceType priceType) {
 		TypedQuery<EtPrice> query = getEntityManager().createQuery(
 				"select price from EtPrice price where price.coin.id = ?1 and price.priceDate <= ?2 and price.type = ?3 order by price.priceDate DESC",
@@ -108,6 +121,7 @@ public class EtPrice extends PanacheEntity implements IPrice {
 		query.setParameter(2, untilDate);
 		return query.getResultList();
 	}
+	
 
 	public static List<EtPrice> getPrices(Long coinId, Date fromDate, Date untilDate) {
 		TypedQuery<EtPrice> query = getEntityManager().createQuery(
@@ -142,8 +156,10 @@ public class EtPrice extends PanacheEntity implements IPrice {
 	}
 
 	public static List<EtPrice> getPricesFromDate(Long coinId, Date fromDate) {
-		return EtPrice.find("select price from EtPrice price where coin.id = ?1 and priceDate >= ?2 order by priceDate ASC",
-				coinId, fromDate).list();
+		return EtPrice
+				.find("select price from EtPrice price where coin.id = ?1 and priceDate >= ?2 order by priceDate ASC",
+						coinId, fromDate)
+				.list();
 	}
 
 	public static EtPrice getPrice(Long coinId, Date date, PriceType priceType) {

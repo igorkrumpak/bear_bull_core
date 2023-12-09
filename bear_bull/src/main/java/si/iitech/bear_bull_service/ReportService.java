@@ -48,9 +48,11 @@ public class ReportService {
 		Log.info("Creating dashboard for coin: " + coin.getName() + " report type: " + reportType.name() + " on thread with id:" + Thread.currentThread().getId());
 		List<EtMetadataCalculator> calculators = EtMetadataCalculator.listAllForDashboardOrderByIndexAsc();
 		EtDashboard dashboard = EtDashboard.findDashboard(coin.getCoinId(), reportType);
-		Date latestPeriodPriceDate = reportType.getStartOfPeriod(EtPrice.getLatestDailyPrice(coin.id).getPriceDate());
-		List<EtPrice> allPricesOnPeriod = EtPrice.getPrices(coin.id, latestPeriodPriceDate,
-				reportType.getUntilDashboardReportDate(latestPeriodPriceDate));
+		
+		List<EtPrice> prices = EtPrice.getPrices(coin.id, DateUtils.getNow());
+		if (prices.isEmpty()) return;
+		Date latestPeriodPriceDate = reportType.getStartOfPeriod(prices.get(0).getPriceDate());
+		List<EtPrice> allPricesOnPeriod = prices.stream().filter(each -> DateUtils.isAfterOrEquals(each.getPriceDate(), latestPeriodPriceDate)).collect(Collectors.toList());
 		EtPrice latestPrice = allPricesOnPeriod.get(0);
 		Date reportDate = latestPrice.getPriceDate();
 		if (dashboard == null) {
@@ -246,7 +248,7 @@ public class ReportService {
 	@Transactional(value = TxType.REQUIRES_NEW)
 	public void createReports(EtCoin coin, ReportType reportType) {
 		List<EtMetadataCalculator> metadataCalculators = EtMetadataCalculator.listAllForInput();
-		Date latestDailyPriceDate = EtPrice.getLatestDailyPrice(coin.id).getPriceDate();
+		Date latestDailyPriceDate = EtPrice.getLatestDailyPriceDate(coin.id);
 		Date dateUntil = reportType.getUntilReportDate(latestDailyPriceDate);
 		List<EtPrice> prices = EtPrice.getPrices(coin.id, dateUntil);
 
