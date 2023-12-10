@@ -7,13 +7,14 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Index;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.TypedQuery;
 
 @Entity
-@Table(name = "PRICE")
+@Table(name = "PRICE", indexes = { @Index(columnList = "priceDate") })
 public class EtPrice extends PanacheEntity implements IPrice {
 
 	@ManyToOne
@@ -101,7 +102,6 @@ public class EtPrice extends PanacheEntity implements IPrice {
 			return null;
 		}
 	}
-	
 
 	public static List<EtPrice> getPrices(Long coinId, Date untilDate, PriceType priceType) {
 		TypedQuery<EtPrice> query = getEntityManager().createQuery(
@@ -121,7 +121,6 @@ public class EtPrice extends PanacheEntity implements IPrice {
 		query.setParameter(2, untilDate);
 		return query.getResultList();
 	}
-	
 
 	public static List<EtPrice> getPrices(Long coinId, Date fromDate, Date untilDate) {
 		TypedQuery<EtPrice> query = getEntityManager().createQuery(

@@ -49,10 +49,10 @@ public class ReportService {
 		List<EtMetadataCalculator> calculators = EtMetadataCalculator.listAllForDashboardOrderByIndexAsc();
 		EtDashboard dashboard = EtDashboard.findDashboard(coin.getCoinId(), reportType);
 		
-		List<EtPrice> prices = EtPrice.getPrices(coin.id, DateUtils.getNow());
-		if (prices.isEmpty()) return;
-		Date latestPeriodPriceDate = reportType.getStartOfPeriod(prices.get(0).getPriceDate());
-		List<EtPrice> allPricesOnPeriod = prices.stream().filter(each -> DateUtils.isAfterOrEquals(each.getPriceDate(), latestPeriodPriceDate)).collect(Collectors.toList());
+		Date latestPeriodPriceDate = reportType.getStartOfPeriod(EtPrice.getLatestDailyPrice(coin.id).getPriceDate());
+		List<EtPrice> allPricesOnPeriod = EtPrice.getPrices(coin.id, latestPeriodPriceDate,
+				reportType.getUntilDashboardReportDate(latestPeriodPriceDate));
+		
 		EtPrice latestPrice = allPricesOnPeriod.get(0);
 		Date reportDate = latestPrice.getPriceDate();
 		if (dashboard == null) {
