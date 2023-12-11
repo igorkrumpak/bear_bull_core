@@ -30,6 +30,17 @@ public class BearBullCalculatorObjectTools {
 		public static Double mfi(CalculatorObject calculatorObject, int size) {
 			return MathUtils.round2DecimalPlaces(100.0 - (100.0 / (1.0 + mfr(calculatorObject, size))));
 		}
+		
+		public static Double ema(CalculatorObject calculatorObject, int size) {
+			CalculatorObjectTools.validate(calculatorObject, size);
+			if (size == calculatorObject.getCoinDataObjects().size()) return CalculatorObjectTools.avg(calculatorObject, size, MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
+			CalculatorObjectTools.validate(calculatorObject, size + 1);
+			double multiplier = MathUtils.round4DecimalPlaces((2.0 / (size + 1.0)));
+			double closingPrice = calculatorObject.getDoubleOrNull(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
+			Double emaPreviousPeriod = calculatorObject.getCoinDataObjects().get(1).getDoubleOrNull(MetadataCalculatorDefinition.EXPONENTIAL_AVARAGE_21_PERIODS.getNotation());
+			if (emaPreviousPeriod == null) return CalculatorObjectTools.avg(calculatorObject, size, MetadataCalculatorDefinition.CLOSING_PRICE.getNotation());
+			return MathUtils.round2DecimalPlaces(((closingPrice - emaPreviousPeriod) * multiplier) + emaPreviousPeriod);
+		}
 
 		public static Double avarageUpMoves(CalculatorObject calculatorObject, int size) {
 			CalculatorObjectTools.validate(calculatorObject, size);

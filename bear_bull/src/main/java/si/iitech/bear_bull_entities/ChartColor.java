@@ -5,7 +5,9 @@ public enum ChartColor {
     BLACK("black"),
     GRAY("gray"),
     RED("red"),
-    ORANGE("orange"),
+    ORANGE("orange"), 
+    SLATE_GREY("SlateGrey"),
+    LIGHT_GREY("LightGrey")
     ;
 
     private String value;

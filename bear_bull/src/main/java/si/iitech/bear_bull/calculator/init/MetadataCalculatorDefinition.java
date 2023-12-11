@@ -27,8 +27,11 @@ public enum MetadataCalculatorDefinition {
     PERCENT_FROM_LAST_PERIOD("percentFromLastPeriod.js", ResultType.DOUBLE, false, true, true, false, ChartCategory.PERCENT_CHART, ChartColor.BLUE, "Value represents how much the asset has depreciated from last period."),
 
     AVARAGE_20_PERIODS("return Tools.avg(o, 20, '" + CLOSING_PRICE.getNotation() + "');", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.GRAY, "Avarage price in 20 periods."),
+    AVARAGE_21_PERIODS("return Tools.avg(o, 21, '" + CLOSING_PRICE.getNotation() + "');", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.GRAY, "Avarage price in 21 periods."),
     AVARAGE_50_PERIODS("return Tools.avg(o, 50, '" + CLOSING_PRICE.getNotation() + "');", ResultType.DOUBLE, false, true, true, true, ChartCategory.PRICE_CHART, ChartColor.ORANGE, "Avarage price in 50 periods."),
     AVARAGE_200_PERIODS("return Tools.avg(o, 200, '" + CLOSING_PRICE.getNotation() + "');", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.RED, "Avarage price in 200 periods."),
+    
+    EXPONENTIAL_AVARAGE_21_PERIODS("return BearBullTools.ema(o, 21);", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.LIGHT_GREY, "Exponential avarage price in 21 periods."),
    
     DEATH_CROSS_50_PERIODS_UNDER_200_PERIODS("return o.getDouble('" + AVARAGE_50_PERIODS.getNotation() + "') < o.getDouble('" + AVARAGE_200_PERIODS.getNotation() + "');", ResultType.BOOLEAN, false, true, true, false, null, null, "Death Cross"),
     MOVING_AVARAGES_CHART("return ChartUtils.chart(140, 60, ChartUtils.createChartObject('" + CLOSING_PRICE.getName() 		+ "', Color.BLUE,   Tools.getCalculatorObjectsDoubleValueReverse(o, 90, '" + CLOSING_PRICE.getNotation() + "')), "

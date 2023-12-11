@@ -43,6 +43,71 @@ public class CoinDataObjectTest extends CryptoTest {
 		calculatedValues.put(MetadataCalculatorDefinition.REPORT_TYPE.getNotation(), ReportType.DAILY.name());
 		return calculatedValues;
 	}
+	
+	@Test
+	public void testEma() throws NoSuchMethodException, ScriptException, IOException {
+		List<CalculatorObject> prices = new ArrayList<>();
+
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.27, date(24, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.19, date(23, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.08, date(22, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.17, date(21, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.18, date(20, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.13, date(19, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.23, date(18, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.43, date(17, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.24, date(16, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.27, date(15, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.19, date(14, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.08, date(13, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.17, date(12, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.18, date(11, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.13, date(10, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.23, date(9, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.43, date(8, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.24, date(7, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.43, date(6, 1, 2020), 0.0, 0.0))));
+		prices.add(new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.24, date(5, 1, 2020), 0.0, 0.0))));
+
+		CalculatorObject coinDataObject1 = new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.29, date(25, 1, 2020), 0.0, 0.0)),
+				prices,
+				Arrays.asList(EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.EXPONENTIAL_AVARAGE_21_PERIODS.getNotation())));
+		assertEquals(22.23, coinDataObject1.getDouble(MetadataCalculatorDefinition.EXPONENTIAL_AVARAGE_21_PERIODS.getNotation()));
+		prices.add(0, coinDataObject1);
+		CalculatorObject coinDataObject2 = new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.15, date(23, 1, 2020), 0.0, 0.0)),
+				prices,
+				Arrays.asList(EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.EXPONENTIAL_AVARAGE_21_PERIODS.getNotation())));
+		assertEquals(22.22, coinDataObject2.getDouble(MetadataCalculatorDefinition.EXPONENTIAL_AVARAGE_21_PERIODS.getNotation()));
+		prices.add(0, coinDataObject2);
+		CalculatorObject coinDataObject3 = new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(22.39, date(24, 1, 2020), 0.0, 0.0)),
+				prices,
+				Arrays.asList(EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.EXPONENTIAL_AVARAGE_21_PERIODS.getNotation())));
+		assertEquals(22.24, coinDataObject3.getDouble(MetadataCalculatorDefinition.EXPONENTIAL_AVARAGE_21_PERIODS.getNotation()));
+
+	}
 
 	// https://school.stockcharts.com/doku.php?id=technical_indicators:stochastic_oscillator_fast_slow_and_full
 	@Test
