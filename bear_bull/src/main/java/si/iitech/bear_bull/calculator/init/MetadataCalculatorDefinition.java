@@ -69,10 +69,11 @@ public enum MetadataCalculatorDefinition {
     TAGS(" if (o.getDouble('" + RSI_14_PERIODS.getNotation() + "') < 30 && o.getDouble('" + MFI_14_PERIODS.getNotation() + "') < 30) o.addTag('Oversold', 'green'); \n" +
         " if (o.getDouble('" + RSI_14_PERIODS.getNotation() + "') > 70 && o.getDouble('" + MFI_14_PERIODS.getNotation() + "') > 70) o.addTag('Overbought', 'volcano'); \n" +
         " if (o.getDouble('" + CLOSING_PRICE.getNotation() + "') > o.getDouble('" + UPPER_BAND_20_PERIODS.getNotation() + "')) o.addTag('Above Bollinger band', 'volcano'); \n" +
+        " if (o.getDouble('" + CLOSING_PRICE.getNotation() + "') > o.getDouble('" + AVARAGE_21_PERIODS.getNotation() + "') && o.getDouble('" + CLOSING_PRICE.getNotation() + "') < o.getDouble('" + EXPONENTIAL_AVARAGE_21_PERIODS.getNotation() + "')) o.addTag('Accumulation zone', 'volcano'); \n" +
         " if (o.getDouble('" + CLOSING_PRICE.getNotation() + "') < o.getDouble('" + LOWER_BAND_20_PERIODS.getNotation() + "')) o.addTag('Below Bollinger band', 'green'); \n" +
         " if (o.getDouble('" + AVARAGE_50_PERIODS.getNotation() + "') > o.getDouble('" + AVARAGE_200_PERIODS.getNotation() + "')) o.addTag('Bullish', 'green'); \n" +
         " if (o.getDouble('" + AVARAGE_200_PERIODS.getNotation() + "') > o.getDouble('" + AVARAGE_50_PERIODS.getNotation() + "')) o.addTag('Bearish', 'volcano'); \n" +
-        " if (100 - o.getDouble('" + LOWER_BAND_20_PERIODS.getNotation() + "') /  o.getDouble('" + UPPER_BAND_20_PERIODS.getNotation() + "') * 100 < 8) o.addTag('Volatile', 'geekblue'); \n" +
+      //  " if (100 - o.getDouble('" + LOWER_BAND_20_PERIODS.getNotation() + "') /  o.getDouble('" + UPPER_BAND_20_PERIODS.getNotation() + "') * 100 < 8) o.addTag('Volatile', 'geekblue'); \n" +
         "return o.tags();", 
         ResultType.STRING, false, true, false, false, null, null, "Tags")
     ;
