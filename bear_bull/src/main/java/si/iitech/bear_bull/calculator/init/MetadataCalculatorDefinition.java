@@ -32,6 +32,8 @@ public enum MetadataCalculatorDefinition {
     AVARAGE_200_PERIODS("return Tools.avg(o, 200, '" + CLOSING_PRICE.getNotation() + "');", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.RED, "Avarage price in 200 periods."),
     
     EXPONENTIAL_AVARAGE_21_PERIODS("return BearBullTools.ema(o, 21);", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.GRAY, "Exponential avarage price in 21 periods."),
+    EXPONENTIAL_AVARAGE_50_PERIODS("return BearBullTools.ema(o, 50);", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.GRAY, "Exponential avarage price in 50 periods."),
+    EXPONENTIAL_AVARAGE_200_PERIODS("return BearBullTools.ema(o, 200);", ResultType.DOUBLE, false, true, true, false, ChartCategory.PRICE_CHART, ChartColor.GRAY, "Exponential avarage price in 200 periods."),
    
     DEATH_CROSS_50_PERIODS_UNDER_200_PERIODS("return o.getDouble('" + AVARAGE_50_PERIODS.getNotation() + "') < o.getDouble('" + AVARAGE_200_PERIODS.getNotation() + "');", ResultType.BOOLEAN, false, true, true, false, null, null, "Death Cross"),
     MOVING_AVARAGES_CHART("return ChartUtils.chart(140, 60, ChartUtils.createChartObject('" + CLOSING_PRICE.getName() 		+ "', Color.BLUE,   Tools.getCalculatorObjectsDoubleValueReverse(o, 90, '" + CLOSING_PRICE.getNotation() + "')), "
