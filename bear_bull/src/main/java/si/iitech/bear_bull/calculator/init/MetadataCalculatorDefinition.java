@@ -9,6 +9,7 @@ import org.apache.commons.text.WordUtils;
 import si.iitech.bear_bull_entities.ChartCategory;
 import si.iitech.bear_bull_entities.ChartColor;
 import si.iitech.bear_bull_entities.ResultType;
+import si.iitech.calculator.JsCodeExecutor;
 
 public enum MetadataCalculatorDefinition {
     
@@ -129,9 +130,7 @@ public enum MetadataCalculatorDefinition {
 
     public String getCode() {
         if (code.isEmpty()) return "";
-        return "var execute = function(o) {\n" + 
-        "   " + code + "\n" +
-        "};\n";
+        return JsCodeExecutor.createExecuteFunction(code);
     }
 
     public ResultType getResultType() {

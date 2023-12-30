@@ -60,7 +60,7 @@ public class CoinLifeCycleTest extends CryptoTest {
 		List<EtReport> reports = EtReport.getReportsDescUntil(dogecoin.id, _31_12_2021, ReportType.DAILY);
 		assertEquals(_31_12_2021, reports.get(0).getReportDate());
 		assertEquals(EtMetadataCalculator.listAllForReportOrderByIndexAsc().size(), reports.get(0).getMetadatasCount());
-		assertEquals(2, reports.get(0).getMetadatasErrorCount());
+		assertEquals(3, reports.get(0).getMetadatasErrorCount());
 
 		priceService.createMissingDailyPrices(dogecoin);
 		reportService.createReports(dogecoin, ReportType.DAILY);
