@@ -96,7 +96,7 @@ public class CoinLifeCycleTest extends CryptoTest {
 		assertEquals(EtMetadataCalculator.listAllForReportOrderByIndexAsc().size(), reports.get(2).getMetadatasCount());
 
 		assertEquals(205, reports.size());
-
+		
 		Chart chart = reportService.getChart(ReportType.DAILY, dogecoin.getCoinId(), 7);
 		assertNotNull(chart);
 	}

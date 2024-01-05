@@ -21,7 +21,7 @@ public class EtMetadataCalculator extends PanacheEntity implements ICalculator {
 
 	private String notation;
 
-	@Column(length = 1000)
+	@Column(length = 4000)
 	private String code;
 	
 	private Boolean deleted = false;

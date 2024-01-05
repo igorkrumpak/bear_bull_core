@@ -1,0 +1,10 @@
+var tags = [];
+if (o.getDouble('RSI_14_Periods') < 30 && o.getDouble('MFI_14_Periods') < 30) tags.push('Oversold;green');
+if (o.getDouble('RSI_14_Periods') > 70 && o.getDouble('MFI_14_Periods') > 70) tags.push('Overbought;volcano');
+if (o.getDouble('Closing_Price') > o.getDouble('Upper_Band_20_Periods')) tags.push('Above Bollinger band;volcano');
+if (o.getDouble('Closing_Price') > o.getDouble('Avarage_21_Periods') && o.getDouble('Closing_Price') < o.getDouble('Exponential_Avarage_21_Periods')) tags.push('Accumulation zone;geekblue');
+if (o.getDouble('Closing_Price') < o.getDouble('Lower_Band_20_Periods')) tags.push('Below Bollinger band;green');
+if (o.getDouble('Avarage_50_Periods') > o.getDouble('Avarage_200_Periods')) tags.push('Bullish;green');
+if (o.getDouble('Avarage_200_Periods') > o.getDouble('Avarage_50_Periods')) tags.push('Bearish;volcano');
+if (100 - o.getDouble('Lower_Band_20_Periods') /  o.getDouble('Upper_Band_20_Periods') * 100 < 8) tags.push('Volatile;geekblue');
+return tags.join(', '); 

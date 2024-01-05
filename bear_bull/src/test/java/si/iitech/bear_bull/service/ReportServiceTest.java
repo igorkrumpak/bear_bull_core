@@ -98,6 +98,7 @@ public class ReportServiceTest extends CryptoTest {
 		assertNotNull(dashboard);
 		assertEquals(date(21, 1, 2022, 3, 0), dashboard.getReportDate());
 		assertNotNull(dashboard.getBollingerBandsChart());
+		assertEquals("Bearish;volcano", dashboard.getTags());
 		
 		EtReport dashboardReport = EtReport.findById(dashboard.getReportId());
 		assertEquals("21.01.2022 03:00",

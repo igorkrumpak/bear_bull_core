@@ -601,45 +601,23 @@ public class CoinDataObjectTest extends CryptoTest {
 		}
 
 	}
-
-	/**
+	
 	@Test
-	public void test50Week() throws NoSuchMethodException, ScriptException {
-		Date startDate = date(1, 5, 2022);
-		Date endDate = date(1, 5, 2023);
-
-		List<CoinDataObject> prices = new ArrayList<>();
-		while(DateUtils.isBefore(startDate, endDate)) {
-			prices.add(new CoinDataObject(
-				prepareInputCalculatedValues(new TestPrice(90.70, startDate, 0.0, 18730.0)))
-			);
-			startDate = DateUtils.addDays(startDate, 1);
-		}
-		
-		Collections.reverse(prices);
-		CoinDataObject coinDataObject = new CoinDataObject(
-				prepareInputCalculatedValues(new TestPrice(90.70, endDate, 0.0, 18730.0)),
-				prices ,
-				Arrays.asList(
-						EtMetadataCalculator.findByNotation(CalculatorIsFirstDayInWeek.NOTATION),
-						EtMetadataCalculator.findByNotation(CalculatorAvarage50Weeks.NOTATION))
-				);
-
-		assertEquals(90.70, coinDataObject.getDouble(CalculatorAvarage50Weeks.NOTATION));
-
-		prices.add(new CoinDataObject(
-				prepareInputCalculatedValues(new TestPrice(90.70, endDate, 0.0, 18730.0))));
-		coinDataObject = new CoinDataObject(
-				prepareInputCalculatedValues(new TestPrice(90.70, date(2, 5, 2023), 0.0, 18730.0)),
-				prices ,
-				Arrays.asList(
-						EtMetadataCalculator.findByNotation(CalculatorIsFirstDayInWeek.NOTATION),
-						EtMetadataCalculator.findByNotation(CalculatorAvarage50Weeks.NOTATION))
-				);
-
-		assertNull(coinDataObject.getDouble(CalculatorAvarage50Weeks.NOTATION));
+	public void testTags() throws NoSuchMethodException, ScriptException {
+		CalculatorObject coinDataObject = new CalculatorObject(
+				prepareInputCalculatedValues(new TestPrice(90.70, date(20, 5, 2020), 0.0, 18730.0)),
+				Arrays.asList(EtMetadataCalculator.findByNotation(MetadataCalculatorDefinition.TAGS.getNotation())));
+		coinDataObject.addCalculatedValue(MetadataCalculatorDefinition.RSI_14_PERIODS.getNotation(), 10.0);
+		coinDataObject.addCalculatedValue(MetadataCalculatorDefinition.MFI_14_PERIODS.getNotation(), 10.0);
+		coinDataObject.addCalculatedValue(MetadataCalculatorDefinition.UPPER_BAND_20_PERIODS.getNotation(), 10.0);
+		coinDataObject.addCalculatedValue(MetadataCalculatorDefinition.AVARAGE_21_PERIODS.getNotation(), 10.0);
+		coinDataObject.addCalculatedValue(MetadataCalculatorDefinition.LOWER_BAND_20_PERIODS.getNotation(), 10.0);
+		coinDataObject.addCalculatedValue(MetadataCalculatorDefinition.CLOSING_PRICE.getNotation(), 14.0);
+		coinDataObject.addCalculatedValue(MetadataCalculatorDefinition.AVARAGE_200_PERIODS.getNotation(), 20.0);
+		coinDataObject.addCalculatedValue(MetadataCalculatorDefinition.AVARAGE_50_PERIODS.getNotation(), 10.0);
+		coinDataObject.addCalculatedValue(MetadataCalculatorDefinition.EXPONENTIAL_AVARAGE_21_PERIODS.getNotation(), 10.0);
+		assertEquals("Oversold;green, Above Bollinger band;volcano, Bearish;volcano, Volatile;geekblue", coinDataObject.getString(MetadataCalculatorDefinition.TAGS.getNotation()));
 	}
-	 */
 
 	@Test
 	public void testPercentFromATH() throws NoSuchMethodException, ScriptException {
