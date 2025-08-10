@@ -84,13 +84,20 @@ public class PriceService {
 			Double totalVolumeValue = totalVolumeValues != null ? totalVolumeValues.get(0).getValue1() : 0.0;
 			createPrice(coin, priceDate, priceValue, marketCapValue, totalVolumeValue,
 					PriceType.DAILY, currentPrices);
-			if (prices.size() > 1) {
-				for (int i = 0; i < prices.size(); i++) {
-					createPrice(coin, prices.get(i).getValue0(), prices.get(i).getValue1(),
-							marketCapValues.get(i).getValue1(), totalVolumeValues.get(i).getValue1(), PriceType.HOURLY,
-							currentPrices);
-				}
-			}
+                        if (prices.size() > 1) {
+                                for (int i = 0; i < prices.size(); i++) {
+                                        double hourlyMarketCapValue = 0.0;
+                                        if (marketCapValues != null && marketCapValues.size() > i && marketCapValues.get(i) != null) {
+                                                hourlyMarketCapValue = marketCapValues.get(i).getValue1();
+                                        }
+                                        double hourlyTotalVolumeValue = 0.0;
+                                        if (totalVolumeValues != null && totalVolumeValues.size() > i && totalVolumeValues.get(i) != null) {
+                                                hourlyTotalVolumeValue = totalVolumeValues.get(i).getValue1();
+                                        }
+                                        createPrice(coin, prices.get(i).getValue0(), prices.get(i).getValue1(),
+                                                        hourlyMarketCapValue, hourlyTotalVolumeValue, PriceType.HOURLY, currentPrices);
+                                }
+                        }
 		}
 		EtPrice.getEntityManager().flush();
 		List<EtPrice> allCurrentDailyPrices = EtPrice.getPrices(coin.id, DateUtils.addDays(from, -45), until,
